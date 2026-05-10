@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>International Rent A Car · Rental Information</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #c8102e;
+    --red-dark: #9a0c23;
+    --red-soft: #fff0f2;
+    --ink: #1a1a1a;
+    --ink-soft: #4a4a4a;
+    --ink-mute: #757575;
+    --bg: #fafaf7;
+    --card: #ffffff;
+    --line: #e8e6e0;
+    --warn: #b85c00;
+    --warn-bg: #fff7ec;
+    --green: #128c7e;
+    --green-dark: #075e54;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  .header {
+    background: var(--red);
+    color: white;
+    padding: 28px 20px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 300px;
+    height: 300px;
+    background: var(--red-dark);
+    border-radius: 50%;
+    opacity: 0.4;
+  }
+
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -60%;
+    left: -10%;
+    width: 250px;
+    height: 250px;
+    background: var(--red-dark);
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+
+  .header-content { position: relative; z-index: 2; }
+
+  .logo-mark {
+    display: inline-block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 4px;
+    background: white;
+    color: var(--red);
+    padding: 4px 14px;
+    border-radius: 2px;
+    margin-bottom: 14px;
+  }
+
+  .logo-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .logo-tagline {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.85;
+    font-weight: 500;
+  }
+
+  .lang-switcher {
+    background: white;
+    border-bottom: 1px solid var(--line);
+    padding: 14px 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  .lang-grid {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 600px;
+    margin: 0 auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .lang-btn {
+    background: white;
+    border: 2px solid var(--line);
+    border-radius: 10px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+    white-space: nowrap;
+    min-height: 44px;
+  }
+
+  .lang-btn:hover { border-color: var(--red); color: var(--red); }
+  .lang-btn.active {
+    background: var(--red);
+    border-color: var(--red);
+    color: white;
+  }
+
+  .flag { font-size: 18px; line-height: 1; }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 16px 60px;
+  }
+
+  .lang-content { display: none; }
+  .lang-content.active { display: block; animation: fadeIn 0.3s ease; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .welcome {
+    text-align: center;
+    margin-bottom: 24px;
+    padding: 20px 16px 0;
+  }
+
+  .welcome h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 1px;
+    color: var(--ink);
+    margin-bottom: 8px;
+    line-height: 1.1;
+  }
+
+  .welcome p {
+    color: var(--ink-mute);
+    font-size: 15px;
+  }
+
+  .quick-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .quick-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 12px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: transform 0.15s;
+    color: white;
+  }
+
+  .quick-btn:active { transform: scale(0.97); }
+  .quick-btn.call { background: var(--red); }
+  .quick-btn.whatsapp { background: var(--green); }
+
+  .section {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 22px 20px;
+    margin-bottom: 14px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--red);
+  }
+
+  .section-icon { font-size: 24px; line-height: 1; }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    color: var(--ink);
+  }
+
+  .section p {
+    color: var(--ink-soft);
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  .section p:last-child { margin-bottom: 0; }
+
+  .section strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .highlight {
+    background: var(--red-soft);
+    color: var(--red);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    display: inline-block;
+    margin: 2px 0;
+  }
+
+  .warning-box {
+    background: var(--warn-bg);
+    border-left: 4px solid var(--warn);
+    padding: 12px 14px;
+    border-radius: 6px;
+    margin-top: 12px;
+    font-size: 14px;
+    color: var(--warn);
+  }
+
+  .warning-box strong { color: var(--warn); }
+
+  .danger-box {
+    background: #fff0f2;
+    border-left: 4px solid var(--red);
+    padding: 12px 14px;
+    border-radius: 6px;
+    margin-top: 12px;
+    font-size: 14px;
+    color: var(--red-dark);
+  }
+
+  .danger-box strong { color: var(--red); }
+
+  .steps {
+    counter-reset: step;
+    margin-top: 8px;
+  }
+
+  .step {
+    display: flex;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .step:last-child { border-bottom: none; padding-bottom: 0; }
+  .step:first-child { padding-top: 0; }
+
+  .step-num {
+    counter-increment: step;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    background: var(--red);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+  }
+
+  .step-num::before { content: counter(step); }
+
+  .step-text {
+    flex: 1;
+    color: var(--ink-soft);
+    font-size: 15px;
+    padding-top: 4px;
+  }
+
+  .step-text strong { color: var(--ink); }
+
+  .rules-list {
+    margin-top: 8px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .rules-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-soft);
+    font-size: 15px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .rules-list li:last-child { border-bottom: none; }
+
+  .rules-list .rule-icon {
+    flex-shrink: 0;
+    font-size: 18px;
+    margin-top: 1px;
+  }
+
+  .contact-card {
+    background: var(--ink);
+    color: white;
+    border-radius: 14px;
+    padding: 24px 20px;
+    margin-top: 20px;
+  }
+
+  .contact-card .section-title { color: white; }
+  .contact-card .section-header { border-bottom-color: var(--red); }
+
+  .contact-grid {
+    display: grid;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .contact-item {
+    background: rgba(255,255,255,0.06);
+    padding: 14px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: white;
+    transition: background 0.2s;
+  }
+
+  .contact-item:hover, .contact-item:active {
+    background: rgba(255,255,255,0.12);
+  }
+
+  .contact-icon {
+    font-size: 22px;
+    background: var(--red);
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .contact-icon.wa { background: var(--green); }
+
+  .contact-text { text-align: left; flex: 1; }
+
+  .contact-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-bottom: 2px;
+  }
+
+  .contact-value {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .hours-display {
+    background: var(--red-soft);
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  .hours-display .time {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--red);
+    letter-spacing: 1px;
+    line-height: 1.3;
+  }
+
+  .emergency {
+    background: #1a1a1a;
+    border-radius: 14px;
+    padding: 20px;
+    margin-top: 14px;
+    color: white;
+  }
+
+  .emergency .section-title { color: white; }
+
+  .emergency-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .emergency-item {
+    background: var(--red);
+    padding: 14px 10px;
+    border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    transition: transform 0.2s;
+  }
+
+  .emergency-item:active { transform: scale(0.97); }
+
+  .emergency-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 1px;
+  }
+
+  .emergency-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+    opacity: 0.9;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 30px 20px 10px;
+    color: var(--ink-mute);
+    font-size: 13px;
+  }
+
+  .footer .thanks {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: var(--red);
+    margin-bottom: 6px;
+  }
+
+  @media (max-width: 480px) {
+    .logo-name { font-size: 26px; }
+    .welcome h1 { font-size: 26px; }
+    .section-title { font-size: 19px; }
+    .lang-btn { font-size: 12px; padding: 7px 10px; }
+    .container { padding: 20px 12px 40px; }
+    .section { padding: 18px 16px; }
+    .quick-btn { font-size: 13px; padding: 12px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-content">
+    <div class="logo-mark">EST. 1973</div>
+    <div class="logo-name">INTERNATIONAL</div>
+    <div class="logo-tagline">RENT A CAR · KOS</div>
+  </div>
+</header>
+
+<nav class="lang-switcher">
+  <div class="lang-grid">
+    <button class="lang-btn" data-lang="en"><span class="flag">🇬🇧</span> English</button>
+    <button class="lang-btn" data-lang="de"><span class="flag">🇩🇪</span> Deutsch</button>
+    <button class="lang-btn" data-lang="fr"><span class="flag">🇫🇷</span> Français</button>
+    <button class="lang-btn" data-lang="it"><span class="flag">🇮🇹</span> Italiano</button>
+    <button class="lang-btn" data-lang="pl"><span class="flag">🇵🇱</span> Polski</button>
+    <button class="lang-btn" data-lang="ru"><span class="flag">🇷🇺</span> Русский</button>
+    <button class="lang-btn" data-lang="nl"><span class="flag">🇳🇱</span> Nederlands</button>
+    <button class="lang-btn" data-lang="cs"><span class="flag">🇨🇿</span> Čeština</button>
+  </div>
+</nav>
+
+<main class="container">
+
+<!-- ENGLISH -->
+<div class="lang-content" data-lang="en">
+  <div class="welcome">
+    <h1>Welcome!</h1>
+    <p>Important rental information & terms</p>
+  </div>
+
+  <div class="quick-actions">
+    <a href="tel:+302242092265" class="quick-btn call">📞 Call us</a>
+    <a href="https://wa.me/306944771738" class="quick-btn whatsapp" target="_blank">💬 WhatsApp</a>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">👤</span><h2 class="section-title">Driver Requirements</h2></div>
+    <p>Minimum age to rent a car: <span class="highlight">23 years old</span></p>
+    <p>For convertibles and larger vehicles: <span class="highlight">over 25 years old</span></p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🕗</span><h2 class="section-title">Rental Day</h2></div>
+    <p>A rental day starts at <strong>08:30</strong> and ends at <strong>21:00</strong>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🛡️</span><h2 class="section-title">Insurance</h2></div>
+    <p>The vehicle is fully insured (<strong>comprehensive cover</strong>), protecting you in the event of an accident.</p>
+    <p><strong>Insurance excess: up to €300</strong></p>
+    <p>In the event of a single-vehicle accident caused by the driver, without any other vehicle involved, the renter is liable for up to <strong>€300</strong> depending on the extent of the damage. This is the maximum amount you will pay in case of damage, provided traffic rules are followed.</p>
+    <div class="warning-box"><strong>⚠️ Important:</strong> The insurance is void if traffic regulations are not observed (e.g. driving under the influence of alcohol or drugs, speeding, running a red light, using a mobile phone while driving). In such cases, the renter is fully liable for all damages.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🚗</span><h2 class="section-title">Vehicle Use Rules</h2></div>
+    <ul class="rules-list">
+      <li><span class="rule-icon">🚫</span><span><strong>Driving on dirt/unpaved roads is prohibited.</strong> Any damage caused on such roads is not covered by insurance.</span></li>
+      <li><span class="rule-icon">🚫</span><span><strong>Taking the vehicle to another island by ferry is prohibited.</strong></span></li>
+      <li><span class="rule-icon">⛽</span><span>Use <strong>petrol (gasoline) only</strong> — never diesel.</span></li>
+      <li><span class="rule-icon">🚭</span><span>Smoking inside the vehicle is not permitted.</span></li>
+    </ul>
+    <div class="warning-box" style="margin-top: 14px;"><strong>⚠️ Speed limit on Kos:</strong> The speed limit on provincial roads is <strong>50 km/h</strong>. Always follow posted signs.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">⛽</span><h2 class="section-title">Fuel Policy</h2></div>
+    <p>The vehicle must be returned with the <strong>same fuel level as when received</strong>. Otherwise, the renter will be charged for the cost of the missing fuel.</p>
+    <div class="danger-box"><strong>⚠️ Petrol only!</strong> All our vehicles use petrol (gasoline). Filling with diesel will cause serious engine damage at the renter's expense.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">📅</span><h2 class="section-title">Cancellation</h2></div>
+    <p>Reservations may be cancelled <strong>free of charge</strong> no later than <strong>one day before</strong> the rental start date.</p>
+    <p>Cancellations made after this point will be charged at the daily rate.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🏢</span><h2 class="section-title">Office Hours</h2></div>
+    <div class="hours-display">
+      <div class="time">08:30 – 11:30</div>
+      <div class="time">18:00 – 21:00</div>
+    </div>
+  </div>
+
+  <div class="contact-card">
+    <div class="section-header"><span class="section-icon">📞</span><h2 class="section-title">Contact Us</h2></div>
+    <div class="contact-grid">
+      <a href="tel:+302242092265" class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div class="contact-text"><div class="contact-label">Office</div><div class="contact-value">+30 22420 92265</div></div>
+      </a>
+      <a href="tel:+306944771738" class="contact-item">
+        <div class="contact-icon">📱</div>
+        <div class="contact-text"><div class="contact-label">Mobile / 24h</div><div class="contact-value">+30 6944 771 738</div></div>
+      </a>
+      <a href="https://wa.me/306944771738" target="_blank" class="contact-item">
+        <div class="contact-icon wa">💬</div>
+        <div class="contact-text"><div class="contact-label">WhatsApp</div><div class="contact-value">Send us a message</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🚨</span><h2 class="section-title">In Case of Accident</h2></div>
+    <div class="steps">
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Stay calm</strong> and stop the vehicle in a safe place. Turn on hazard lights.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Check for injuries.</strong> If anyone is hurt, call <strong>112</strong> immediately.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Call the Police (100)</strong> — a police report is required for the insurance to be valid.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Take photos</strong> of the vehicles, license plates, and the scene from multiple angles.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Call us immediately</strong> on <a href="tel:+306944771738" style="color: var(--red); font-weight: 600;">+30 6944 771 738</a> (24/7).</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Do NOT sign any document</strong> or admit fault before contacting us.</div></div>
+    </div>
+  </div>
+
+  <div class="emergency">
+    <div class="section-header"><span class="section-icon">🚨</span><h2 class="section-title">Emergency Numbers (Greece)</h2></div>
+    <div class="emergency-grid">
+      <a href="tel:112" class="emergency-item"><div class="emergency-number">112</div><div class="emergency-label">All Emergencies</div></a>
+      <a href="tel:100" class="emergency-item"><div class="emergency-number">100</div><div class="emergency-label">Police</div></a>
+      <a href="tel:166" class="emergency-item"><div class="emergency-number">166</div><div class="emergency-label">Ambulance</div></a>
+      <a href="tel:199" class="emergency-item"><div class="emergency-number">199</div><div class="emergency-label">Fire Service</div></a>
+    </div>
+  </div>
+</div>
+
+<!-- GERMAN -->
+<div class="lang-content" data-lang="de">
+  <div class="welcome">
+    <h1>Willkommen!</h1>
+    <p>Wichtige Mietinformationen & Bedingungen</p>
+  </div>
+
+  <div class="quick-actions">
+    <a href="tel:+302242092265" class="quick-btn call">📞 Anrufen</a>
+    <a href="https://wa.me/306944771738" class="quick-btn whatsapp" target="_blank">💬 WhatsApp</a>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">👤</span><h2 class="section-title">Anforderungen an den Fahrer</h2></div>
+    <p>Mindestalter zum Mieten eines Fahrzeugs: <span class="highlight">23 Jahre</span></p>
+    <p>Für Cabriolets und größere Fahrzeuge: <span class="highlight">über 25 Jahre</span></p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🕗</span><h2 class="section-title">Miettag</h2></div>
+    <p>Ein Miettag beginnt um <strong>08:30 Uhr</strong> und endet um <strong>21:00 Uhr</strong>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🛡️</span><h2 class="section-title">Versicherung</h2></div>
+    <p>Das Fahrzeug ist <strong>vollkaskoversichert</strong> und schützt Sie im Falle eines Unfalls.</p>
+    <p><strong>Selbstbeteiligung: bis zu 300 €</strong></p>
+    <p>Im Falle eines Alleinunfalls, der vom Fahrer verursacht wurde und an dem kein anderes Fahrzeug beteiligt ist, haftet der Mieter je nach Schadensumfang mit bis zu <strong>300 €</strong>. Dies ist der Höchstbetrag, den Sie im Schadensfall zahlen, sofern die Verkehrsregeln eingehalten werden.</p>
+    <div class="warning-box"><strong>⚠️ Wichtig:</strong> Die Versicherung erlischt, wenn Verkehrsregeln nicht eingehalten werden (z. B. Fahren unter Alkohol- oder Drogeneinfluss, Geschwindigkeitsüberschreitung, Überfahren einer roten Ampel, Handynutzung während der Fahrt). In solchen Fällen haftet der Mieter vollständig für alle Schäden.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🚗</span><h2 class="section-title">Nutzungsregeln</h2></div>
+    <ul class="rules-list">
+      <li><span class="rule-icon">🚫</span><span><strong>Das Fahren auf Schotter- oder unbefestigten Straßen ist verboten.</strong> Schäden auf solchen Straßen sind nicht versichert.</span></li>
+      <li><span class="rule-icon">🚫</span><span><strong>Die Mitnahme des Fahrzeugs auf eine andere Insel mit der Fähre ist verboten.</strong></span></li>
+      <li><span class="rule-icon">⛽</span><span>Nur <strong>Benzin tanken</strong> — niemals Diesel.</span></li>
+      <li><span class="rule-icon">🚭</span><span>Rauchen im Fahrzeug ist nicht gestattet.</span></li>
+    </ul>
+    <div class="warning-box" style="margin-top: 14px;"><strong>⚠️ Geschwindigkeit auf Kos:</strong> Auf Landstraßen gilt eine Geschwindigkeitsbegrenzung von <strong>50 km/h</strong>. Beachten Sie immer die Schilder.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">⛽</span><h2 class="section-title">Kraftstoff</h2></div>
+    <p>Das Fahrzeug muss mit dem <strong>gleichen Kraftstoffstand zurückgegeben werden</strong>, mit dem es übergeben wurde. Andernfalls werden dem Mieter die Kosten für den fehlenden Kraftstoff in Rechnung gestellt.</p>
+    <div class="danger-box"><strong>⚠️ Nur Benzin!</strong> Alle unsere Fahrzeuge fahren mit Benzin. Das Tanken von Diesel verursacht schwere Motorschäden auf Kosten des Mieters.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">📅</span><h2 class="section-title">Stornierung</h2></div>
+    <p>Reservierungen können <strong>kostenlos</strong> bis spätestens <strong>einen Tag vor</strong> Mietbeginn storniert werden.</p>
+    <p>Spätere Stornierungen werden mit dem Tagessatz berechnet.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🏢</span><h2 class="section-title">Öffnungszeiten</h2></div>
+    <div class="hours-display">
+      <div class="time">08:30 – 11:30</div>
+      <div class="time">18:00 – 21:00</div>
+    </div>
+  </div>
+
+  <div class="contact-card">
+    <div class="section-header"><span class="section-icon">📞</span><h2 class="section-title">Kontakt</h2></div>
+    <div class="contact-grid">
+      <a href="tel:+302242092265" class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div class="contact-text"><div class="contact-label">Büro</div><div class="contact-value">+30 22420 92265</div></div>
+      </a>
+      <a href="tel:+306944771738" class="contact-item">
+        <div class="contact-icon">📱</div>
+        <div class="contact-text"><div class="contact-label">Mobil / 24h</div><div class="contact-value">+30 6944 771 738</div></div>
+      </a>
+      <a href="https://wa.me/306944771738" target="_blank" class="contact-item">
+        <div class="contact-icon wa">💬</div>
+        <div class="contact-text"><div class="contact-label">WhatsApp</div><div class="contact-value">Nachricht senden</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🚨</span><h2 class="section-title">Im Falle eines Unfalls</h2></div>
+    <div class="steps">
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Bleiben Sie ruhig</strong> und halten Sie das Fahrzeug an einem sicheren Ort an. Schalten Sie die Warnblinkanlage ein.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Prüfen Sie auf Verletzte.</strong> Bei Verletzungen sofort <strong>112</strong> anrufen.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Polizei rufen (100)</strong> — ein Polizeibericht ist für die Versicherung erforderlich.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Machen Sie Fotos</strong> von den Fahrzeugen, Kennzeichen und der Unfallstelle aus mehreren Blickwinkeln.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Rufen Sie uns sofort an</strong> unter <a href="tel:+306944771738" style="color: var(--red); font-weight: 600;">+30 6944 771 738</a> (24/7).</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Unterschreiben Sie KEINE Dokumente</strong> und geben Sie keine Schuld zu, bevor Sie mit uns gesprochen haben.</div></div>
+    </div>
+  </div>
+
+  <div class="emergency">
+    <div class="section-header"><span class="section-icon">🚨</span><h2 class="section-title">Notrufnummern (Griechenland)</h2></div>
+    <div class="emergency-grid">
+      <a href="tel:112" class="emergency-item"><div class="emergency-number">112</div><div class="emergency-label">Alle Notfälle</div></a>
+      <a href="tel:100" class="emergency-item"><div class="emergency-number">100</div><div class="emergency-label">Polizei</div></a>
+      <a href="tel:166" class="emergency-item"><div class="emergency-number">166</div><div class="emergency-label">Krankenwagen</div></a>
+      <a href="tel:199" class="emergency-item"><div class="emergency-number">199</div><div class="emergency-label">Feuerwehr</div></a>
+    </div>
+  </div>
+</div>
+
+<!-- FRENCH -->
+<div class="lang-content" data-lang="fr">
+  <div class="welcome">
+    <h1>Bienvenue !</h1>
+    <p>Informations et conditions de location</p>
+  </div>
+
+  <div class="quick-actions">
+    <a href="tel:+302242092265" class="quick-btn call">📞 Appeler</a>
+    <a href="https://wa.me/306944771738" class="quick-btn whatsapp" target="_blank">💬 WhatsApp</a>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">👤</span><h2 class="section-title">Exigences pour le conducteur</h2></div>
+    <p>Âge minimum pour louer une voiture : <span class="highlight">23 ans</span></p>
+    <p>Pour les cabriolets et véhicules plus grands : <span class="highlight">plus de 25 ans</span></p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🕗</span><h2 class="section-title">Journée de location</h2></div>
+    <p>Une journée de location commence à <strong>08h30</strong> et se termine à <strong>21h00</strong>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🛡️</span><h2 class="section-title">Assurance</h2></div>
+    <p>Le véhicule est <strong>entièrement assuré (tous risques)</strong>, vous protégeant en cas d'accident.</p>
+    <p><strong>Franchise d'assurance : jusqu'à 300 €</strong></p>
+    <p>En cas d'accident impliquant un seul véhicule causé par le conducteur, sans autre véhicule impliqué, le locataire est responsable jusqu'à <strong>300 €</strong> selon l'étendue des dommages. Il s'agit du montant maximum que vous paierez en cas de dommage, sous réserve du respect du code de la route.</p>
+    <div class="warning-box"><strong>⚠️ Important :</strong> L'assurance est annulée en cas de non-respect du code de la route (par exemple : conduite sous l'influence de l'alcool ou de drogues, excès de vitesse, brûlage de feu rouge, utilisation du téléphone portable au volant). Dans ces cas, le locataire est entièrement responsable de tous les dommages.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🚗</span><h2 class="section-title">Règles d'utilisation</h2></div>
+    <ul class="rules-list">
+      <li><span class="rule-icon">🚫</span><span><strong>La conduite sur des chemins de terre ou non goudronnés est interdite.</strong> Les dommages causés sur ces routes ne sont pas couverts par l'assurance.</span></li>
+      <li><span class="rule-icon">🚫</span><span><strong>Il est interdit d'emmener le véhicule sur une autre île par ferry.</strong></span></li>
+      <li><span class="rule-icon">⛽</span><span>Utilisez <strong>uniquement de l'essence</strong> — jamais de diesel.</span></li>
+      <li><span class="rule-icon">🚭</span><span>Il est interdit de fumer dans le véhicule.</span></li>
+    </ul>
+    <div class="warning-box" style="margin-top: 14px;"><strong>⚠️ Vitesse à Kos :</strong> La vitesse limite sur les routes départementales est de <strong>50 km/h</strong>. Respectez toujours les panneaux.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">⛽</span><h2 class="section-title">Carburant</h2></div>
+    <p>Le véhicule doit être restitué avec <strong>le même niveau de carburant qu'à la prise en charge</strong>. Sinon, le locataire sera facturé pour le coût du carburant manquant.</p>
+    <div class="danger-box"><strong>⚠️ Essence uniquement !</strong> Tous nos véhicules roulent à l'essence. Faire le plein de diesel causera de graves dommages au moteur aux frais du locataire.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">📅</span><h2 class="section-title">Annulation</h2></div>
+    <p>Les réservations peuvent être annulées <strong>gratuitement</strong> au plus tard <strong>un jour avant</strong> la date de début de location.</p>
+    <p>Les annulations effectuées après ce délai seront facturées au tarif journalier.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🏢</span><h2 class="section-title">Heures d'ouverture</h2></div>
+    <div class="hours-display">
+      <div class="time">08h30 – 11h30</div>
+      <div class="time">18h00 – 21h00</div>
+    </div>
+  </div>
+
+  <div class="contact-card">
+    <div class="section-header"><span class="section-icon">📞</span><h2 class="section-title">Contactez-nous</h2></div>
+    <div class="contact-grid">
+      <a href="tel:+302242092265" class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div class="contact-text"><div class="contact-label">Bureau</div><div class="contact-value">+30 22420 92265</div></div>
+      </a>
+      <a href="tel:+306944771738" class="contact-item">
+        <div class="contact-icon">📱</div>
+        <div class="contact-text"><div class="contact-label">Mobile / 24h</div><div class="contact-value">+30 6944 771 738</div></div>
+      </a>
+      <a href="https://wa.me/306944771738" target="_blank" class="contact-item">
+        <div class="contact-icon wa">💬</div>
+        <div class="contact-text"><div class="contact-label">WhatsApp</div><div class="contact-value">Envoyer un message</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🚨</span><h2 class="section-title">En cas d'accident</h2></div>
+    <div class="steps">
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Restez calme</strong> et arrêtez le véhicule dans un endroit sûr. Allumez les feux de détresse.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Vérifiez s'il y a des blessés.</strong> En cas de blessure, appelez immédiatement le <strong>112</strong>.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Appelez la police (100)</strong> — un rapport de police est nécessaire pour la validité de l'assurance.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Prenez des photos</strong> des véhicules, des plaques d'immatriculation et de la scène sous plusieurs angles.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Appelez-nous immédiatement</strong> au <a href="tel:+306944771738" style="color: var(--red); font-weight: 600;">+30 6944 771 738</a> (24h/24).</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>NE signez aucun document</strong> et ne reconnaissez aucune responsabilité avant de nous avoir contactés.</div></div>
+    </div>
+  </div>
+
+  <div class="emergency">
+    <div class="section-header"><span class="section-icon">🚨</span><h2 class="section-title">Numéros d'urgence (Grèce)</h2></div>
+    <div class="emergency-grid">
+      <a href="tel:112" class="emergency-item"><div class="emergency-number">112</div><div class="emergency-label">Toutes urgences</div></a>
+      <a href="tel:100" class="emergency-item"><div class="emergency-number">100</div><div class="emergency-label">Police</div></a>
+      <a href="tel:166" class="emergency-item"><div class="emergency-number">166</div><div class="emergency-label">Ambulance</div></a>
+      <a href="tel:199" class="emergency-item"><div class="emergency-number">199</div><div class="emergency-label">Pompiers</div></a>
+    </div>
+  </div>
+</div>
+
+<!-- ITALIAN -->
+<div class="lang-content" data-lang="it">
+  <div class="welcome">
+    <h1>Benvenuti!</h1>
+    <p>Informazioni e condizioni di noleggio</p>
+  </div>
+
+  <div class="quick-actions">
+    <a href="tel:+302242092265" class="quick-btn call">📞 Chiamaci</a>
+    <a href="https://wa.me/306944771738" class="quick-btn whatsapp" target="_blank">💬 WhatsApp</a>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">👤</span><h2 class="section-title">Requisiti del conducente</h2></div>
+    <p>Età minima per noleggiare un'auto: <span class="highlight">23 anni</span></p>
+    <p>Per cabriolet e veicoli più grandi: <span class="highlight">oltre 25 anni</span></p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🕗</span><h2 class="section-title">Giornata di noleggio</h2></div>
+    <p>Una giornata di noleggio inizia alle <strong>08:30</strong> e termina alle <strong>21:00</strong>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🛡️</span><h2 class="section-title">Assicurazione</h2></div>
+    <p>Il veicolo è <strong>completamente assicurato (kasko)</strong>, proteggendovi in caso di incidente.</p>
+    <p><strong>Franchigia assicurativa: fino a 300 €</strong></p>
+    <p>In caso di incidente con un solo veicolo causato dal conducente, senza coinvolgimento di altri veicoli, il noleggiatore è responsabile fino a <strong>300 €</strong> a seconda dell'entità del danno. Questo è l'importo massimo che pagherete in caso di danno, a condizione che siano rispettate le regole del traffico.</p>
+    <div class="warning-box"><strong>⚠️ Importante:</strong> L'assicurazione è invalida se non vengono rispettate le norme stradali (ad es. guida sotto l'effetto di alcol o droghe, eccesso di velocità, passaggio con il rosso, uso del telefono cellulare durante la guida). In tali casi, il noleggiatore è pienamente responsabile per tutti i danni.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🚗</span><h2 class="section-title">Regole d'uso del veicolo</h2></div>
+    <ul class="rules-list">
+      <li><span class="rule-icon">🚫</span><span><strong>È vietato guidare su strade sterrate o non asfaltate.</strong> I danni causati su tali strade non sono coperti dall'assicurazione.</span></li>
+      <li><span class="rule-icon">🚫</span><span><strong>È vietato portare il veicolo su un'altra isola tramite traghetto.</strong></span></li>
+      <li><span class="rule-icon">⛽</span><span>Utilizzare <strong>solo benzina</strong> — mai gasolio.</span></li>
+      <li><span class="rule-icon">🚭</span><span>È vietato fumare all'interno del veicolo.</span></li>
+    </ul>
+    <div class="warning-box" style="margin-top: 14px;"><strong>⚠️ Velocità a Kos:</strong> Il limite di velocità sulle strade provinciali è di <strong>50 km/h</strong>. Seguite sempre la segnaletica.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">⛽</span><h2 class="section-title">Carburante</h2></div>
+    <p>Il veicolo deve essere restituito con <strong>lo stesso livello di carburante con cui è stato ricevuto</strong>. In caso contrario, al noleggiatore verrà addebitato il costo del carburante mancante.</p>
+    <div class="danger-box"><strong>⚠️ Solo benzina!</strong> Tutti i nostri veicoli utilizzano benzina. Fare rifornimento di gasolio causerà gravi danni al motore a spese del noleggiatore.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">📅</span><h2 class="section-title">Cancellazione</h2></div>
+    <p>Le prenotazioni possono essere cancellate <strong>gratuitamente</strong> entro e non oltre <strong>un giorno prima</strong> della data di inizio del noleggio.</p>
+    <p>Le cancellazioni effettuate dopo tale termine saranno addebitate alla tariffa giornaliera.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🏢</span><h2 class="section-title">Orari di apertura</h2></div>
+    <div class="hours-display">
+      <div class="time">08:30 – 11:30</div>
+      <div class="time">18:00 – 21:00</div>
+    </div>
+  </div>
+
+  <div class="contact-card">
+    <div class="section-header"><span class="section-icon">📞</span><h2 class="section-title">Contattateci</h2></div>
+    <div class="contact-grid">
+      <a href="tel:+302242092265" class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div class="contact-text"><div class="contact-label">Ufficio</div><div class="contact-value">+30 22420 92265</div></div>
+      </a>
+      <a href="tel:+306944771738" class="contact-item">
+        <div class="contact-icon">📱</div>
+        <div class="contact-text"><div class="contact-label">Cellulare / 24h</div><div class="contact-value">+30 6944 771 738</div></div>
+      </a>
+      <a href="https://wa.me/306944771738" target="_blank" class="contact-item">
+        <div class="contact-icon wa">💬</div>
+        <div class="contact-text"><div class="contact-label">WhatsApp</div><div class="contact-value">Inviaci un messaggio</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🚨</span><h2 class="section-title">In caso di incidente</h2></div>
+    <div class="steps">
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Mantenete la calma</strong> e fermate il veicolo in un luogo sicuro. Accendete le luci di emergenza.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Verificate se ci sono feriti.</strong> In caso di feriti, chiamate immediatamente il <strong>112</strong>.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Chiamate la Polizia (100)</strong> — un verbale di polizia è necessario per la validità dell'assicurazione.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Scattate foto</strong> dei veicoli, delle targhe e della scena da più angolazioni.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Chiamateci immediatamente</strong> al <a href="tel:+306944771738" style="color: var(--red); font-weight: 600;">+30 6944 771 738</a> (24/7).</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>NON firmate alcun documento</strong> e non ammettete colpe prima di averci contattato.</div></div>
+    </div>
+  </div>
+
+  <div class="emergency">
+    <div class="section-header"><span class="section-icon">🚨</span><h2 class="section-title">Numeri di emergenza (Grecia)</h2></div>
+    <div class="emergency-grid">
+      <a href="tel:112" class="emergency-item"><div class="emergency-number">112</div><div class="emergency-label">Tutte le emergenze</div></a>
+      <a href="tel:100" class="emergency-item"><div class="emergency-number">100</div><div class="emergency-label">Polizia</div></a>
+      <a href="tel:166" class="emergency-item"><div class="emergency-number">166</div><div class="emergency-label">Ambulanza</div></a>
+      <a href="tel:199" class="emergency-item"><div class="emergency-number">199</div><div class="emergency-label">Vigili del fuoco</div></a>
+    </div>
+  </div>
+</div>
+
+<!-- POLISH -->
+<div class="lang-content" data-lang="pl">
+  <div class="welcome">
+    <h1>Witamy!</h1>
+    <p>Ważne informacje i warunki wynajmu</p>
+  </div>
+
+  <div class="quick-actions">
+    <a href="tel:+302242092265" class="quick-btn call">📞 Zadzwoń</a>
+    <a href="https://wa.me/306944771738" class="quick-btn whatsapp" target="_blank">💬 WhatsApp</a>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">👤</span><h2 class="section-title">Wymagania dla kierowcy</h2></div>
+    <p>Minimalny wiek wynajmu samochodu: <span class="highlight">23 lata</span></p>
+    <p>Dla kabrioletów i większych pojazdów: <span class="highlight">powyżej 25 lat</span></p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🕗</span><h2 class="section-title">Doba wynajmu</h2></div>
+    <p>Doba wynajmu rozpoczyna się o <strong>08:30</strong> i kończy o <strong>21:00</strong>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🛡️</span><h2 class="section-title">Ubezpieczenie</h2></div>
+    <p>Pojazd jest <strong>w pełni ubezpieczony (ubezpieczenie pełne)</strong>, chroniąc Państwa w razie wypadku.</p>
+    <p><strong>Udział własny w ubezpieczeniu: do 300 €</strong></p>
+    <p>W przypadku wypadku z udziałem jednego pojazdu spowodowanego przez kierowcę, bez udziału innych pojazdów, najemca odpowiada do kwoty <strong>300 €</strong> w zależności od rozmiaru szkody. Jest to maksymalna kwota, jaką Państwo zapłacą w przypadku szkody, pod warunkiem przestrzegania przepisów ruchu drogowego.</p>
+    <div class="warning-box"><strong>⚠️ Ważne:</strong> Ubezpieczenie traci ważność w przypadku nieprzestrzegania przepisów ruchu drogowego (np. prowadzenie pod wpływem alkoholu lub narkotyków, przekroczenie prędkości, przejechanie na czerwonym świetle, używanie telefonu komórkowego podczas jazdy). W takich przypadkach najemca ponosi pełną odpowiedzialność za wszystkie szkody.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🚗</span><h2 class="section-title">Zasady użytkowania pojazdu</h2></div>
+    <ul class="rules-list">
+      <li><span class="rule-icon">🚫</span><span><strong>Jazda po drogach gruntowych jest zabroniona.</strong> Szkody powstałe na takich drogach nie są objęte ubezpieczeniem.</span></li>
+      <li><span class="rule-icon">🚫</span><span><strong>Zabrania się przewożenia pojazdu promem na inną wyspę.</strong></span></li>
+      <li><span class="rule-icon">⛽</span><span>Używać <strong>tylko benzyny</strong> — nigdy oleju napędowego.</span></li>
+      <li><span class="rule-icon">🚭</span><span>Palenie w pojeździe jest zabronione.</span></li>
+    </ul>
+    <div class="warning-box" style="margin-top: 14px;"><strong>⚠️ Prędkość na Kos:</strong> Ograniczenie prędkości na drogach lokalnych wynosi <strong>50 km/h</strong>. Zawsze przestrzegaj znaków drogowych.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">⛽</span><h2 class="section-title">Paliwo</h2></div>
+    <p>Pojazd musi zostać zwrócony z <strong>takim samym poziomem paliwa, z jakim został odebrany</strong>. W przeciwnym razie najemca zostanie obciążony kosztem brakującego paliwa.</p>
+    <div class="danger-box"><strong>⚠️ Tylko benzyna!</strong> Wszystkie nasze pojazdy używają benzyny. Tankowanie oleju napędowego spowoduje poważne uszkodzenie silnika na koszt najemcy.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">📅</span><h2 class="section-title">Anulowanie</h2></div>
+    <p>Rezerwacje można anulować <strong>bezpłatnie</strong> nie później niż <strong>jeden dzień przed</strong> datą rozpoczęcia wynajmu.</p>
+    <p>Anulowanie po tym terminie będzie obciążone stawką dzienną.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🏢</span><h2 class="section-title">Godziny otwarcia</h2></div>
+    <div class="hours-display">
+      <div class="time">08:30 – 11:30</div>
+      <div class="time">18:00 – 21:00</div>
+    </div>
+  </div>
+
+  <div class="contact-card">
+    <div class="section-header"><span class="section-icon">📞</span><h2 class="section-title">Kontakt</h2></div>
+    <div class="contact-grid">
+      <a href="tel:+302242092265" class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div class="contact-text"><div class="contact-label">Biuro</div><div class="contact-value">+30 22420 92265</div></div>
+      </a>
+      <a href="tel:+306944771738" class="contact-item">
+        <div class="contact-icon">📱</div>
+        <div class="contact-text"><div class="contact-label">Komórka / 24h</div><div class="contact-value">+30 6944 771 738</div></div>
+      </a>
+      <a href="https://wa.me/306944771738" target="_blank" class="contact-item">
+        <div class="contact-icon wa">💬</div>
+        <div class="contact-text"><div class="contact-label">WhatsApp</div><div class="contact-value">Wyślij wiadomość</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🚨</span><h2 class="section-title">W razie wypadku</h2></div>
+    <div class="steps">
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Zachowaj spokój</strong> i zatrzymaj pojazd w bezpiecznym miejscu. Włącz światła awaryjne.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Sprawdź, czy są ranni.</strong> Jeśli ktoś jest ranny, natychmiast zadzwoń pod numer <strong>112</strong>.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Wezwij Policję (100)</strong> — protokół policyjny jest wymagany do uznania ubezpieczenia.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Zrób zdjęcia</strong> pojazdów, tablic rejestracyjnych i miejsca zdarzenia z różnych stron.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Zadzwoń do nas natychmiast</strong> pod numer <a href="tel:+306944771738" style="color: var(--red); font-weight: 600;">+30 6944 771 738</a> (24/7).</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>NIE podpisuj żadnych dokumentów</strong> ani nie przyznawaj się do winy przed kontaktem z nami.</div></div>
+    </div>
+  </div>
+
+  <div class="emergency">
+    <div class="section-header"><span class="section-icon">🚨</span><h2 class="section-title">Numery alarmowe (Grecja)</h2></div>
+    <div class="emergency-grid">
+      <a href="tel:112" class="emergency-item"><div class="emergency-number">112</div><div class="emergency-label">Wszystkie nagłe wypadki</div></a>
+      <a href="tel:100" class="emergency-item"><div class="emergency-number">100</div><div class="emergency-label">Policja</div></a>
+      <a href="tel:166" class="emergency-item"><div class="emergency-number">166</div><div class="emergency-label">Pogotowie</div></a>
+      <a href="tel:199" class="emergency-item"><div class="emergency-number">199</div><div class="emergency-label">Straż pożarna</div></a>
+    </div>
+  </div>
+</div>
+
+<!-- RUSSIAN -->
+<div class="lang-content" data-lang="ru">
+  <div class="welcome">
+    <h1>Добро пожаловать!</h1>
+    <p>Важная информация и условия аренды</p>
+  </div>
+
+  <div class="quick-actions">
+    <a href="tel:+302242092265" class="quick-btn call">📞 Позвонить</a>
+    <a href="https://wa.me/306944771738" class="quick-btn whatsapp" target="_blank">💬 WhatsApp</a>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">👤</span><h2 class="section-title">Требования к водителю</h2></div>
+    <p>Минимальный возраст для аренды автомобиля: <span class="highlight">23 года</span></p>
+    <p>Для кабриолетов и более крупных автомобилей: <span class="highlight">старше 25 лет</span></p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🕗</span><h2 class="section-title">Сутки аренды</h2></div>
+    <p>Сутки аренды начинаются в <strong>08:30</strong> и заканчиваются в <strong>21:00</strong>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🛡️</span><h2 class="section-title">Страхование</h2></div>
+    <p>Автомобиль <strong>полностью застрахован (КАСКО)</strong>, что защищает вас в случае ДТП.</p>
+    <p><strong>Франшиза по страховке: до 300 €</strong></p>
+    <p>В случае ДТП с одним транспортным средством по вине водителя, без участия других автомобилей, арендатор несёт ответственность до <strong>300 €</strong> в зависимости от размера ущерба. Это максимальная сумма, которую вы заплатите в случае повреждения, при условии соблюдения правил дорожного движения.</p>
+    <div class="warning-box"><strong>⚠️ Важно:</strong> Страховка аннулируется при несоблюдении правил дорожного движения (например: вождение под воздействием алкоголя или наркотиков, превышение скорости, проезд на красный свет, использование мобильного телефона во время вождения). В таких случаях арендатор несёт полную ответственность за все повреждения.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🚗</span><h2 class="section-title">Правила использования автомобиля</h2></div>
+    <ul class="rules-list">
+      <li><span class="rule-icon">🚫</span><span><strong>Запрещено движение по грунтовым дорогам.</strong> Повреждения, полученные на таких дорогах, не покрываются страховкой.</span></li>
+      <li><span class="rule-icon">🚫</span><span><strong>Запрещено перевозить автомобиль на другой остров на пароме.</strong></span></li>
+      <li><span class="rule-icon">⛽</span><span>Используйте <strong>только бензин</strong> — никогда не дизель.</span></li>
+      <li><span class="rule-icon">🚭</span><span>Курение в автомобиле запрещено.</span></li>
+    </ul>
+    <div class="warning-box" style="margin-top: 14px;"><strong>⚠️ Скорость на Косе:</strong> Ограничение скорости на областных дорогах составляет <strong>50 км/ч</strong>. Всегда следуйте установленным знакам.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">⛽</span><h2 class="section-title">Топливо</h2></div>
+    <p>Автомобиль должен быть возвращён с <strong>таким же уровнем топлива, с каким он был получен</strong>. В противном случае с арендатора будет взиматься плата за недостающее топливо.</p>
+    <div class="danger-box"><strong>⚠️ Только бензин!</strong> Все наши автомобили работают на бензине. Заправка дизельным топливом приведёт к серьёзным повреждениям двигателя за счёт арендатора.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">📅</span><h2 class="section-title">Отмена бронирования</h2></div>
+    <p>Бронирование можно отменить <strong>бесплатно</strong> не позднее, чем <strong>за один день до</strong> начала аренды.</p>
+    <p>Отмена после этого срока оплачивается по суточному тарифу.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🏢</span><h2 class="section-title">Часы работы</h2></div>
+    <div class="hours-display">
+      <div class="time">08:30 – 11:30</div>
+      <div class="time">18:00 – 21:00</div>
+    </div>
+  </div>
+
+  <div class="contact-card">
+    <div class="section-header"><span class="section-icon">📞</span><h2 class="section-title">Связаться с нами</h2></div>
+    <div class="contact-grid">
+      <a href="tel:+302242092265" class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div class="contact-text"><div class="contact-label">Офис</div><div class="contact-value">+30 22420 92265</div></div>
+      </a>
+      <a href="tel:+306944771738" class="contact-item">
+        <div class="contact-icon">📱</div>
+        <div class="contact-text"><div class="contact-label">Мобильный / 24ч</div><div class="contact-value">+30 6944 771 738</div></div>
+      </a>
+      <a href="https://wa.me/306944771738" target="_blank" class="contact-item">
+        <div class="contact-icon wa">💬</div>
+        <div class="contact-text"><div class="contact-label">WhatsApp</div><div class="contact-value">Отправить сообщение</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🚨</span><h2 class="section-title">В случае ДТП</h2></div>
+    <div class="steps">
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Сохраняйте спокойствие</strong> и остановите автомобиль в безопасном месте. Включите аварийную сигнализацию.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Проверьте наличие пострадавших.</strong> Если кто-то ранен, немедленно позвоните <strong>112</strong>.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Вызовите полицию (100)</strong> — полицейский протокол необходим для действия страховки.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Сделайте фотографии</strong> автомобилей, номерных знаков и места происшествия с разных ракурсов.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Немедленно позвоните нам</strong> по номеру <a href="tel:+306944771738" style="color: var(--red); font-weight: 600;">+30 6944 771 738</a> (24/7).</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>НЕ подписывайте никаких документов</strong> и не признавайте вину до связи с нами.</div></div>
+    </div>
+  </div>
+
+  <div class="emergency">
+    <div class="section-header"><span class="section-icon">🚨</span><h2 class="section-title">Экстренные номера (Греция)</h2></div>
+    <div class="emergency-grid">
+      <a href="tel:112" class="emergency-item"><div class="emergency-number">112</div><div class="emergency-label">Все службы</div></a>
+      <a href="tel:100" class="emergency-item"><div class="emergency-number">100</div><div class="emergency-label">Полиция</div></a>
+      <a href="tel:166" class="emergency-item"><div class="emergency-number">166</div><div class="emergency-label">Скорая помощь</div></a>
+      <a href="tel:199" class="emergency-item"><div class="emergency-number">199</div><div class="emergency-label">Пожарная служба</div></a>
+    </div>
+  </div>
+</div>
+
+<!-- DUTCH -->
+<div class="lang-content" data-lang="nl">
+  <div class="welcome">
+    <h1>Welkom!</h1>
+    <p>Belangrijke huurinformatie & voorwaarden</p>
+  </div>
+
+  <div class="quick-actions">
+    <a href="tel:+302242092265" class="quick-btn call">📞 Bel ons</a>
+    <a href="https://wa.me/306944771738" class="quick-btn whatsapp" target="_blank">💬 WhatsApp</a>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">👤</span><h2 class="section-title">Vereisten voor de bestuurder</h2></div>
+    <p>Minimumleeftijd om een auto te huren: <span class="highlight">23 jaar</span></p>
+    <p>Voor cabrio's en grotere voertuigen: <span class="highlight">ouder dan 25 jaar</span></p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🕗</span><h2 class="section-title">Huurdag</h2></div>
+    <p>Een huurdag begint om <strong>08:30</strong> en eindigt om <strong>21:00</strong>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🛡️</span><h2 class="section-title">Verzekering</h2></div>
+    <p>Het voertuig is volledig verzekerd (<strong>allriskdekking</strong>), wat u beschermt in geval van een ongeval.</p>
+    <p><strong>Eigen risico verzekering: tot € 300</strong></p>
+    <p>In geval van een eenzijdig ongeval veroorzaakt door de bestuurder, zonder dat een ander voertuig betrokken is, is de huurder aansprakelijk tot <strong>€ 300</strong>, afhankelijk van de omvang van de schade. Dit is het maximale bedrag dat u betaalt bij schade, mits de verkeersregels worden nageleefd.</p>
+    <div class="warning-box"><strong>⚠️ Belangrijk:</strong> De verzekering vervalt indien de verkeersregels niet worden nageleefd (bijv. rijden onder invloed van alcohol of drugs, te hard rijden, door een rood licht rijden, gebruik van een mobiele telefoon tijdens het rijden). In dergelijke gevallen is de huurder volledig aansprakelijk voor alle schade.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🚗</span><h2 class="section-title">Gebruiksregels voertuig</h2></div>
+    <ul class="rules-list">
+      <li><span class="rule-icon">🚫</span><span><strong>Rijden op onverharde wegen of zandwegen is verboden.</strong> Schade die op dergelijke wegen ontstaat, wordt niet door de verzekering gedekt.</span></li>
+      <li><span class="rule-icon">🚫</span><span><strong>Het is verboden het voertuig met de veerboot naar een ander eiland te brengen.</strong></span></li>
+      <li><span class="rule-icon">⛽</span><span>Gebruik <strong>alleen benzine</strong> — nooit diesel.</span></li>
+      <li><span class="rule-icon">🚭</span><span>Roken in het voertuig is niet toegestaan.</span></li>
+    </ul>
+    <div class="warning-box" style="margin-top: 14px;"><strong>⚠️ Snelheid op Kos:</strong> De maximumsnelheid op provinciale wegen is <strong>50 km/u</strong>. Volg altijd de borden.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">⛽</span><h2 class="section-title">Brandstofbeleid</h2></div>
+    <p>Het voertuig moet worden teruggebracht met <strong>hetzelfde brandstofniveau als bij ontvangst</strong>. Anders worden de kosten van de ontbrekende brandstof aan de huurder in rekening gebracht.</p>
+    <div class="danger-box"><strong>⚠️ Alleen benzine!</strong> Al onze voertuigen rijden op benzine. Het tanken van diesel veroorzaakt ernstige motorschade op kosten van de huurder.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">📅</span><h2 class="section-title">Annulering</h2></div>
+    <p>Reserveringen kunnen <strong>kosteloos</strong> worden geannuleerd uiterlijk <strong>één dag vóór</strong> de aanvangsdatum van de huur.</p>
+    <p>Annuleringen na deze datum worden in rekening gebracht tegen het dagtarief.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🏢</span><h2 class="section-title">Openingstijden</h2></div>
+    <div class="hours-display">
+      <div class="time">08:30 – 11:30</div>
+      <div class="time">18:00 – 21:00</div>
+    </div>
+  </div>
+
+  <div class="contact-card">
+    <div class="section-header"><span class="section-icon">📞</span><h2 class="section-title">Contact</h2></div>
+    <div class="contact-grid">
+      <a href="tel:+302242092265" class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div class="contact-text"><div class="contact-label">Kantoor</div><div class="contact-value">+30 22420 92265</div></div>
+      </a>
+      <a href="tel:+306944771738" class="contact-item">
+        <div class="contact-icon">📱</div>
+        <div class="contact-text"><div class="contact-label">Mobiel / 24u</div><div class="contact-value">+30 6944 771 738</div></div>
+      </a>
+      <a href="https://wa.me/306944771738" target="_blank" class="contact-item">
+        <div class="contact-icon wa">💬</div>
+        <div class="contact-text"><div class="contact-label">WhatsApp</div><div class="contact-value">Stuur ons een bericht</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🚨</span><h2 class="section-title">In geval van een ongeval</h2></div>
+    <div class="steps">
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Blijf kalm</strong> en zet het voertuig op een veilige plek stil. Schakel de alarmlichten in.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Controleer of er gewonden zijn.</strong> Bel bij gewonden onmiddellijk <strong>112</strong>.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Bel de politie (100)</strong> — een politierapport is vereist voor de geldigheid van de verzekering.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Maak foto's</strong> van de voertuigen, kentekenplaten en de plaats van het ongeval vanuit meerdere hoeken.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Bel ons direct</strong> op <a href="tel:+306944771738" style="color: var(--red); font-weight: 600;">+30 6944 771 738</a> (24/7).</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Onderteken GEEN documenten</strong> en geef geen schuld toe voordat u contact met ons heeft opgenomen.</div></div>
+    </div>
+  </div>
+
+  <div class="emergency">
+    <div class="section-header"><span class="section-icon">🚨</span><h2 class="section-title">Noodnummers (Griekenland)</h2></div>
+    <div class="emergency-grid">
+      <a href="tel:112" class="emergency-item"><div class="emergency-number">112</div><div class="emergency-label">Alle noodgevallen</div></a>
+      <a href="tel:100" class="emergency-item"><div class="emergency-number">100</div><div class="emergency-label">Politie</div></a>
+      <a href="tel:166" class="emergency-item"><div class="emergency-number">166</div><div class="emergency-label">Ambulance</div></a>
+      <a href="tel:199" class="emergency-item"><div class="emergency-number">199</div><div class="emergency-label">Brandweer</div></a>
+    </div>
+  </div>
+</div>
+
+<!-- CZECH -->
+<div class="lang-content" data-lang="cs">
+  <div class="welcome">
+    <h1>Vítejte!</h1>
+    <p>Důležité informace a podmínky pronájmu</p>
+  </div>
+
+  <div class="quick-actions">
+    <a href="tel:+302242092265" class="quick-btn call">📞 Zavolejte nám</a>
+    <a href="https://wa.me/306944771738" class="quick-btn whatsapp" target="_blank">💬 WhatsApp</a>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">👤</span><h2 class="section-title">Požadavky na řidiče</h2></div>
+    <p>Minimální věk pro pronájem auta: <span class="highlight">23 let</span></p>
+    <p>Pro kabriolety a větší vozidla: <span class="highlight">nad 25 let</span></p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🕗</span><h2 class="section-title">Den pronájmu</h2></div>
+    <p>Den pronájmu začíná v <strong>08:30</strong> a končí ve <strong>21:00</strong>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🛡️</span><h2 class="section-title">Pojištění</h2></div>
+    <p>Vozidlo je plně pojištěno (<strong>havarijní pojištění</strong>) a chrání vás v případě nehody.</p>
+    <p><strong>Spoluúčast pojištění: až 300 €</strong></p>
+    <p>V případě nehody jednoho vozidla zaviněné řidičem, bez účasti dalšího vozidla, je nájemce odpovědný až do výše <strong>300 €</strong> v závislosti na rozsahu škody. Toto je maximální částka, kterou zaplatíte v případě poškození, za předpokladu dodržování dopravních předpisů.</p>
+    <div class="warning-box"><strong>⚠️ Důležité:</strong> Pojištění je neplatné, pokud nejsou dodržovány dopravní předpisy (např. řízení pod vlivem alkoholu nebo drog, překročení rychlosti, jízda na červenou, používání mobilního telefonu během jízdy). V takových případech nese nájemce plnou odpovědnost za všechny škody.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🚗</span><h2 class="section-title">Pravidla používání vozidla</h2></div>
+    <ul class="rules-list">
+      <li><span class="rule-icon">🚫</span><span><strong>Jízda po nezpevněných cestách je zakázána.</strong> Škody způsobené na takových cestách nejsou kryty pojištěním.</span></li>
+      <li><span class="rule-icon">🚫</span><span><strong>Je zakázáno převážet vozidlo trajektem na jiný ostrov.</strong></span></li>
+      <li><span class="rule-icon">⛽</span><span>Používejte <strong>pouze benzín</strong> — nikdy ne naftu.</span></li>
+      <li><span class="rule-icon">🚭</span><span>Kouření ve vozidle není povoleno.</span></li>
+    </ul>
+    <div class="warning-box" style="margin-top: 14px;"><strong>⚠️ Rychlost na Kosu:</strong> Maximální rychlost na okresních silnicích je <strong>50 km/h</strong>. Vždy dodržujte dopravní značení.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">⛽</span><h2 class="section-title">Palivo</h2></div>
+    <p>Vozidlo musí být vráceno se <strong>stejnou hladinou paliva, jako bylo převzato</strong>. V opačném případě bude nájemci účtována cena chybějícího paliva.</p>
+    <div class="danger-box"><strong>⚠️ Pouze benzín!</strong> Všechna naše vozidla jezdí na benzín. Tankování nafty způsobí vážné poškození motoru na náklady nájemce.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">📅</span><h2 class="section-title">Storno</h2></div>
+    <p>Rezervace lze stornovat <strong>zdarma</strong> nejpozději <strong>jeden den před</strong> začátkem pronájmu.</p>
+    <p>Storno provedené po této lhůtě bude účtováno denní sazbou.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🏢</span><h2 class="section-title">Otevírací doba</h2></div>
+    <div class="hours-display">
+      <div class="time">08:30 – 11:30</div>
+      <div class="time">18:00 – 21:00</div>
+    </div>
+  </div>
+
+  <div class="contact-card">
+    <div class="section-header"><span class="section-icon">📞</span><h2 class="section-title">Kontakt</h2></div>
+    <div class="contact-grid">
+      <a href="tel:+302242092265" class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div class="contact-text"><div class="contact-label">Kancelář</div><div class="contact-value">+30 22420 92265</div></div>
+      </a>
+      <a href="tel:+306944771738" class="contact-item">
+        <div class="contact-icon">📱</div>
+        <div class="contact-text"><div class="contact-label">Mobil / 24h</div><div class="contact-value">+30 6944 771 738</div></div>
+      </a>
+      <a href="https://wa.me/306944771738" target="_blank" class="contact-item">
+        <div class="contact-icon wa">💬</div>
+        <div class="contact-text"><div class="contact-label">WhatsApp</div><div class="contact-value">Pošlete nám zprávu</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-icon">🚨</span><h2 class="section-title">V případě nehody</h2></div>
+    <div class="steps">
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Zachovejte klid</strong> a zastavte vozidlo na bezpečném místě. Zapněte výstražná světla.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Zkontrolujte, zda nejsou zranění.</strong> Pokud je někdo zraněn, ihned volejte <strong>112</strong>.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Zavolejte policii (100)</strong> — policejní zpráva je nutná pro platnost pojištění.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Vyfoťte</strong> vozidla, registrační značky a místo nehody z více úhlů.</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>Okamžitě nám zavolejte</strong> na <a href="tel:+306944771738" style="color: var(--red); font-weight: 600;">+30 6944 771 738</a> (24/7).</div></div>
+      <div class="step"><div class="step-num"></div><div class="step-text"><strong>NEPODEPISUJTE žádné dokumenty</strong> a nepřiznávejte vinu před tím, než nás kontaktujete.</div></div>
+    </div>
+  </div>
+
+  <div class="emergency">
+    <div class="section-header"><span class="section-icon">🚨</span><h2 class="section-title">Tísňová čísla (Řecko)</h2></div>
+    <div class="emergency-grid">
+      <a href="tel:112" class="emergency-item"><div class="emergency-number">112</div><div class="emergency-label">Všechny tísňové stavy</div></a>
+      <a href="tel:100" class="emergency-item"><div class="emergency-number">100</div><div class="emergency-label">Policie</div></a>
+      <a href="tel:166" class="emergency-item"><div class="emergency-number">166</div><div class="emergency-label">Záchranná služba</div></a>
+      <a href="tel:199" class="emergency-item"><div class="emergency-number">199</div><div class="emergency-label">Hasiči</div></a>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="thanks">THANK YOU · DANKE · MERCI · GRAZIE · DZIĘKUJEMY · СПАСИБО · DANK U · DĚKUJEME</div>
+  <div>INTERNATIONAL RENT A CAR · KOS</div>
+</div>
+
+</main>
+
+<script>
+  const SUPPORTED_LANGS = ['en', 'de', 'fr', 'it', 'pl', 'ru', 'nl', 'cs'];
+  const DEFAULT_LANG = 'en';
+
+  function detectLanguage() {
+    try {
+      const saved = localStorage.getItem('preferredLang');
+      if (saved && SUPPORTED_LANGS.includes(saved)) return saved;
+    } catch(e) {}
+
+    const browserLangs = navigator.languages || [navigator.language || navigator.userLanguage];
+    for (const lang of browserLangs) {
+      const code = lang.toLowerCase().split('-')[0];
+      if (SUPPORTED_LANGS.includes(code)) return code;
+    }
+    return DEFAULT_LANG;
+  }
+
+  function setLanguage(lang) {
+    document.querySelectorAll('.lang-content').forEach(el => {
+      el.classList.toggle('active', el.dataset.lang === lang);
+    });
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+    document.documentElement.lang = lang;
+    try { localStorage.setItem('preferredLang', lang); } catch(e) {}
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+  });
+
+  setLanguage(detectLanguage());
+</script>
+
+<!-- GoatCounter Analytics -->
+<script data-goatcounter="https://secureonlineco.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+</body>
+</html>
