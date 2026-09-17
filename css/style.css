@@ -868,35 +868,21 @@ address { font-style: normal; }
   position: relative;
   height: 175px;
   overflow: hidden;
-  background: var(--card-bg);
+  background: #ffffff;
   flex-shrink: 0;
 }
+/* Official Fleet image library: assets/images/fleet/cards/
+   All Fleet card images must be loaded from this folder.
+   All cards share one consistent presentation — contain + center. */
 .fleet-card__img-wrap img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center 45%;
+  object-fit: contain;
+  object-position: center center;
   transition: transform var(--t-slow);
   display: block;
 }
 .fleet-card.fleet-shown:hover .fleet-card__img-wrap img { transform: scale(1.05); }
-
-/* Official Fleet image library: assets/images/fleet/cards/
-   All Fleet card images must be loaded from this folder.
-   Cards 1–3 (Group A, B, B1) use local studio images — contain + center. */
-.fleet-grid .fleet-card:nth-child(1) .fleet-card__img-wrap img,
-.fleet-grid .fleet-card:nth-child(2) .fleet-card__img-wrap img,
-.fleet-grid .fleet-card:nth-child(3) .fleet-card__img-wrap img {
-  object-fit: contain;
-  object-position: center center;
-}
-/* Group A — scale +8%, lift 6px */
-.fleet-grid .fleet-card:first-child .fleet-card__img-wrap img {
-  transform: scale(1.08) translateY(-6px);
-}
-.fleet-grid .fleet-card.fleet-shown:first-child:hover .fleet-card__img-wrap img {
-  transform: scale(1.134) translateY(-6px);
-}
 
 /* Group badge */
 .fleet-card__badge {
