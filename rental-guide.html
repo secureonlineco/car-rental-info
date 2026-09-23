@@ -13,9 +13,10 @@
 </head>
 <body class="rg-page">
 
-  <!-- ═══════════════════════ NAVIGATION ═══════════════════════ -->
-  <header class="rg-nav" role="banner">
-    <div class="rg-nav__inner">
+  <!-- ═══════════════════════ NAVIGATION ═══════════════════════
+       Same nav + mobile menu markup/behavior as fleet.html. -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
 
       <a href="index.html" class="rg-nav__back" id="rgBack" aria-label="Go back to home page">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -24,9 +25,49 @@
         <span>Back</span>
       </a>
 
-      <a href="index.html" class="rg-nav__logo" aria-label="International Rent A Car — Home">
-        <div class="rg-nav__logo-icon" aria-hidden="true">
-          <svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <a href="index.html#home" class="nav__logo" aria-label="International Rent A Car — Home">
+        <div class="nav__logo-bars" aria-hidden="true">
+          <div class="nav__logo-bar--red"></div>
+          <div class="nav__logo-bar--white"></div>
+        </div>
+        <div class="nav__logo-text">
+          <span class="nav__logo-name">INTERNATIONAL</span>
+          <span class="nav__logo-sub">RENT A CAR</span>
+          <span class="nav__logo-since">SINCE 1973</span>
+        </div>
+      </a>
+
+      <div class="nav__right">
+        <div class="nav__lang" role="button" tabindex="0" aria-label="Language: English">
+          <svg width="18" height="12" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="18" height="12" rx="1.5" fill="#012169"/>
+            <path d="M0 0L18 12M18 0L0 12" stroke="white" stroke-width="2.5"/>
+            <path d="M0 0L18 12M18 0L0 12" stroke="#C8102E" stroke-width="1.5"/>
+            <path d="M9 0V12M0 6H18" stroke="white" stroke-width="3.2"/>
+            <path d="M9 0V12M0 6H18" stroke="#C8102E" stroke-width="1.9"/>
+          </svg>
+          <span>English</span>
+          <svg width="9" height="5" viewBox="0 0 9 5" fill="none" aria-hidden="true">
+            <path d="M1 1l3.5 3L8 1" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <button class="nav__burger" id="navBurger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobMenu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ═══════════════════════ MOBILE MENU ══════════════════════ -->
+  <div class="mob-menu" id="mobMenu" aria-hidden="true" role="dialog" aria-label="Navigation">
+    <div class="mob-menu__bg" id="mobMenuBg"></div>
+    <div class="mob-menu__panel">
+      <div class="mob-menu__head">
+        <div class="mob-menu__logo" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 40 40" fill="none">
             <rect width="40" height="40" rx="6" fill="#CC2228"/>
             <circle cx="20" cy="20" r="6.5" stroke="white" stroke-width="1.6" fill="none"/>
             <line x1="20" y1="8"  x2="20" y2="12.5" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
@@ -38,19 +79,38 @@
             <line x1="28.7" y1="11.3" x2="25.1" y2="14.9" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
             <line x1="14.9" y1="25.1" x2="11.3" y2="28.7" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
           </svg>
+          <span>Menu</span>
         </div>
-        <div class="rg-nav__logo-text">
-          <span class="rg-nav__logo-name">INTERNATIONAL</span>
-          <span class="rg-nav__logo-sub">RENT A CAR</span>
-          <span class="rg-nav__logo-since">Since 1973</span>
-        </div>
-      </a>
-
-      <!-- Spacer keeps logo centred in the 3-column grid -->
-      <div class="rg-nav__spacer" aria-hidden="true"></div>
-
+        <button class="mob-menu__close" id="mobMenuClose" aria-label="Close menu">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <path d="M14 4L4 14M4 4l10 10" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <nav class="mob-menu__nav" aria-label="Main navigation">
+        <a href="fleet.html"                   class="mob-menu__link">Our Fleet</a>
+        <a href="index.html#rental-guide"       class="mob-menu__link">Insurance &amp; Rental Info</a>
+        <a href="index.html#explore"            class="mob-menu__link">Explore Kos</a>
+        <a href="index.html#emergency"          class="mob-menu__link">Emergency</a>
+        <a href="index.html#contact"            class="mob-menu__link">Contact</a>
+      </nav>
+      <div class="mob-menu__footer">
+        <a href="tel:+302242092265" class="mob-menu__cta mob-menu__cta--red">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+            <path d="M13.5 10.5c-.28-.28-2.15-1.4-2.55-1.4-.4 0-.55.3-1.05.85-.28.28-.48.3-.75.15-.6-.28-1.8-.8-2.55-2.45-.1-.28-.1-.45.2-.75.47-.47.75-.65.75-1.05 0-.4-1.05-2-1.35-2.28-.28-.28-.55 0-.8.2-.47.28-.85.65-1.05 1.15-.2.47-.08 1.05.1 1.55.55 1.4 1.4 2.72 2.55 3.85 1.15 1.15 2.45 2 3.85 2.55.47.18 1.05.28 1.55.1.47-.18.87-.6 1.15-1.05.28-.38.48-.57.28-.85-.08-.08-.3-.2-1.05-.85z" fill="white"/>
+          </svg>
+          Call us now
+        </a>
+        <a href="https://wa.me/306944771738" target="_blank" rel="noopener" class="mob-menu__cta mob-menu__cta--outline">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+            <path d="M7.5 1C3.91 1 1 3.91 1 7.5c0 1.08.28 2.1.78 2.98L1 14l3.6-.77A6.5 6.5 0 107.5 1z" stroke="white" stroke-width="1.2" fill="none"/>
+            <path d="M5.3 6.2c0-.15.1-.28.23-.3l.23-.02c.15-.01.28.08.3.22l.27.93c.03.1-.02.21-.12.26l-.27.17c.24.48.65.9 1.13 1.14l.17-.27a.22.22 0 01.26-.12l.93.27c.14.03.23.16.22.3l-.02.23c-.02.15-.15.26-.3.26C6.75 9 5.3 7.55 5.3 6.42V6.2z" fill="white"/>
+          </svg>
+          WhatsApp
+        </a>
+      </div>
     </div>
-  </header>
+  </div>
 
   <!-- ═══════════════════════ PAGE HERO HEADER ═════════════════ -->
   <div class="rg-hero" aria-hidden="true" role="presentation">
@@ -496,6 +556,7 @@
   </main><!-- /rg-content -->
 
   <!-- ═══════════════════════ SCRIPT ════════════════════════════ -->
+  <script src="js/app.js"></script>
   <script>
   (function () {
     'use strict';

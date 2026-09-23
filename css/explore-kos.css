@@ -1,0 +1,302 @@
+/* ═══════════════════════════════════════════════════════════════
+   Explore Kos — digital island guide prototype
+   Requires: css/style.css, css/rental-guide.css
+   ═══════════════════════════════════════════════════════════════ */
+
+.ek-page {
+  background: var(--off-white);
+  overflow-x: hidden;
+}
+
+/* Hero: keep the existing header; give the title room below it */
+.ek-page .rg-hero {
+  padding-top: calc(72px + env(safe-area-inset-top, 0px));
+}
+.ek-page .rg-hero__inner {
+  padding: 28px 18px 40px;
+}
+.ek-page .rg-hero__title {
+  overflow: visible;
+  line-height: 1.08;
+}
+.ek-page .rg-hero::after {
+  height: 24px;
+}
+
+.ek {
+  padding: 12px 0 48px;
+}
+
+/* ── Categories ─────────────────────────────────────────────── */
+.ek-cats {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin: 0 -18px 16px;
+  padding: 2px 20px 8px 18px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: 18px;
+}
+.ek-cats::-webkit-scrollbar { display: none; }
+
+.ek-cats__btn {
+  flex: 0 0 auto;
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  background: var(--white);
+  border: 1.5px solid var(--border-2);
+  border-radius: 20px;
+  white-space: nowrap;
+  scroll-snap-align: start;
+  scroll-margin-inline: 18px;
+  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+}
+.ek-cats__btn:last-child {
+  scroll-margin-inline-end: 20px;
+  margin-right: 4px;
+}
+.ek-cats__btn:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+.ek-cats__btn.is-active {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--white);
+}
+
+/* ── Map ────────────────────────────────────────────────────── */
+.ek-map {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #8aa8b8;
+  margin-bottom: 14px;
+  border: 1px solid rgba(13, 27, 96, 0.10);
+  box-shadow: 0 8px 22px rgba(13, 27, 96, 0.07);
+}
+
+.ek-map__canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ek-map__island {
+  stroke: rgba(13, 27, 96, 0.18);
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.ek-map__island-shadow {
+  fill: rgba(13, 27, 96, 0.09);
+}
+.ek-map__ridge { fill: #c8d6b6; }
+.ek-map__contour {
+  fill: none;
+  stroke: rgba(13, 27, 96, 0.10);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+}
+.ek-map__bay { fill: #8aadc0; }
+.ek-map__label {
+  fill: rgba(13, 27, 96, 0.18);
+  font-family: Poppins, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.46em;
+  text-anchor: middle;
+}
+
+.ek-map__pins {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ek-pin {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  width: 15px;
+  height: 15px;
+  padding: 0;
+  border: none;
+  border-radius: 50% 50% 50% 3px;
+  background: var(--red);
+  opacity: 0.42;
+  box-shadow: 0 2px 6px rgba(204, 34, 40, 0.16);
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 1;
+  transition: transform var(--t-fast), box-shadow var(--t-fast), opacity var(--t-fast), background var(--t-fast);
+}
+.ek-pin::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: var(--white);
+}
+.ek-pin:hover {
+  opacity: 0.8;
+  transform: translate(-50%, -108%) scale(1.08);
+  z-index: 2;
+}
+.ek-pin.is-active {
+  width: 22px;
+  height: 22px;
+  opacity: 1;
+  background: var(--red);
+  transform: translate(-50%, -112%) scale(1.08);
+  box-shadow: 0 0 0 4px rgba(204, 34, 40, 0.16), 0 5px 14px rgba(204, 34, 40, 0.36);
+  z-index: 3;
+}
+.ek-pin.is-active::after {
+  inset: 6px;
+}
+
+/* ── Location selector ──────────────────────────────────────── */
+.ek-select {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 4px 18px 10px 2px;
+  margin: 0 -18px 16px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: 18px;
+}
+.ek-select::-webkit-scrollbar { display: none; }
+
+.ek-select__btn {
+  flex: 0 0 auto;
+  padding: 9px 16px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-2);
+  background: var(--white);
+  border: 1.5px solid var(--border-2);
+  border-radius: 20px;
+  white-space: nowrap;
+  scroll-snap-align: start;
+  scroll-margin-inline: 16px;
+  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast), transform var(--t-fast);
+}
+.ek-select__btn:last-child {
+  scroll-margin-inline-end: 18px;
+  margin-right: 4px;
+}
+.ek-select__btn:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+.ek-select__btn.is-active {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--white);
+}
+
+/* ── Info panel ─────────────────────────────────────────────── */
+.ek-panel {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 18px 20px;
+  box-shadow: 0 8px 24px rgba(13, 27, 96, 0.06);
+}
+
+.ek-panel__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--red);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.ek-panel__eyebrow::before {
+  content: '';
+  width: 3px;
+  height: 12px;
+  background: var(--red);
+  border-radius: 2px;
+}
+
+.ek-panel__title {
+  font-size: clamp(20px, 5.6vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.ek-panel__meta {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-3);
+  margin-bottom: 8px;
+}
+
+.ek-panel__text {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin-bottom: 12px;
+  max-width: 460px;
+}
+
+.ek-panel__cta {
+  display: inline-block;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--red);
+  letter-spacing: 0.01em;
+}
+
+@media (min-width: 640px) {
+  .ek-cats,
+  .ek-select {
+    margin-inline: 0;
+    padding-inline: 0 8px;
+  }
+  .ek-pin { width: 16px; height: 16px; }
+  .ek-pin::after { inset: 4px; }
+  .ek-pin.is-active { width: 24px; height: 24px; }
+  .ek-pin.is-active::after { inset: 7px; }
+  .ek-panel { padding: 26px 26px 28px; }
+}
+
+@media (min-width: 900px) {
+  .ek { padding: 20px 0 64px; }
+  .ek-cats {
+    margin-bottom: 20px;
+    overflow: visible;
+  }
+  .ek-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.7fr);
+    gap: 22px;
+    align-items: start;
+  }
+  .ek-map { margin-bottom: 14px; }
+  .ek-aside { position: sticky; top: 88px; }
+}
+
+@media (min-width: 1366px) {
+  .ek-layout { gap: 28px; }
+}

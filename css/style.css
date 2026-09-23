@@ -232,6 +232,11 @@ address { font-style: normal; }
 /* Right side */
 .nav__right { display: flex; align-items: center; gap: 14px; }
 
+.nav__lang-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
 .nav__lang {
   display: flex;
   align-items: center;
@@ -246,8 +251,65 @@ address { font-style: normal; }
   cursor: pointer;
   transition: background var(--t-fast);
   user-select: none;
+  font-family: inherit;
+  line-height: inherit;
+  margin: 0;
+  appearance: none;
+  -webkit-appearance: none;
 }
 .nav__lang:hover { background: rgba(255,255,255,0.14); }
+.nav__lang:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.65);
+  outline-offset: 2px;
+}
+
+.nav__lang-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 230;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  min-width: 168px;
+  width: max-content;
+  max-width: min(196px, calc(100vw - 24px));
+  max-height: min(50vh, calc(100dvh - 72px));
+  overflow-y: auto;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: rgba(12, 12, 22, 0.96);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+}
+.nav__lang-menu[hidden] { display: none; }
+.nav__lang-menu [role="option"] {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: auto;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 0;
+  background: transparent;
+  color: var(--white);
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+.nav__lang-menu [role="option"]:hover,
+.nav__lang-menu [role="option"]:focus {
+  background: rgba(255,255,255,0.14);
+  outline: none;
+}
+.nav__lang-menu [role="option"][aria-selected="true"] {
+  background: rgba(255,255,255,0.10);
+}
 
 .nav__burger {
   display: flex;
@@ -390,53 +452,63 @@ address { font-style: normal; }
   overflow: hidden;
 }
 
-/* Slide backgrounds */
+/* Slide backgrounds — img + picture for desktop/mobile art direction */
 .hero__slide {
   position: absolute; inset: 0;
-  background-size: cover;
-  background-position: center 52%;
   opacity: 0;
   transition: opacity 2s ease;
   z-index: 0;
   will-change: opacity;
   transform: scale(1.03);
-  /* Cinematic grade: slightly darker, punchier contrast, warm saturation */
-  filter: brightness(0.86) contrast(1.07) saturate(1.10);
+}
+.hero__slide picture {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+.hero__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center 52%;
+  pointer-events: none;
+}
+@media (max-width: 639px) {
+  .hero__img { object-position: center center; }
 }
 .hero__slide.active { opacity: 1; transform: scale(1); transition: opacity 2s ease, transform 8s ease; }
 
-/* Overlays */
+/* Overlays — smooth LTR: readable left, natural center, open right */
 .hero__overlay {
   position: absolute; inset: 0;
   background:
-    /* Left-to-right: dark text zone → transparent scenic right */
     linear-gradient(
       to right,
-      rgba(3, 3, 14, 0.96) 0%,
-      rgba(5, 5, 18, 0.82) 26%,
-      rgba(7, 7, 22, 0.52) 52%,
-      rgba(4, 4, 16, 0.14) 100%
+      rgba(6, 8, 20, 0.66) 0%,
+      rgba(6, 8, 20, 0.52) 12%,
+      rgba(6, 8, 20, 0.36) 26%,
+      rgba(6, 8, 20, 0.20) 42%,
+      rgba(6, 8, 20, 0.08) 62%,
+      rgba(6, 8, 20, 0.00) 100%
     ),
-    /* Top darkening for nav readability */
     linear-gradient(
       to bottom,
-      rgba(4, 4, 16, 0.44) 0%,
-      transparent 28%
-    ),
-    /* Warm harbour-light undertone at the lower-left */
-    linear-gradient(
-      165deg,
-      transparent 45%,
-      rgba(100, 48, 12, 0.10) 100%
+      rgba(6, 8, 20, 0.30) 0%,
+      transparent 22%
     );
   z-index: 1;
+  pointer-events: none;
 }
 .hero__vignette {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  height: 320px;
-  background: linear-gradient(to top, rgba(3,3,14,0.90) 0%, rgba(3,3,14,0.42) 52%, transparent 100%);
+  height: 140px;
+  background: linear-gradient(to top, rgba(6,8,20,0.26) 0%, transparent 100%);
   z-index: 2;
+  pointer-events: none;
 }
 
 /* Content block */
@@ -452,34 +524,87 @@ address { font-style: normal; }
   max-width: 680px;
 }
 
-.hero__heading {
+/* Intro line — small, white, one line, secondary to the headline */
+.hero__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-family: var(--font);
-  font-size: clamp(47px, 12.4vw, 78px);
-  font-weight: 800;
+  font-size: clamp(14px, 3.2vw, 20px);
+  font-style: normal;
+  font-weight: 700;
   color: var(--white);
-  line-height: 0.92;
-  letter-spacing: -0.01em;
-  margin-bottom: 24px;
-  text-shadow: 0 4px 52px rgba(0,0,0,0.38), 0 1px 8px rgba(0,0,0,0.22);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin: 0 0 6px;
+  white-space: nowrap;
+  text-shadow: 0 3px 28px rgba(0,0,0,0.40), 0 1px 8px rgba(0,0,0,0.22);
+}
+.hero__kicker::before {
+  content: '';
+  display: block;
+  width: 3px;
+  min-width: 3px;
+  height: 0.72em;
+  background: var(--red);
+  border-radius: 2px;
+  flex-shrink: 0;
 }
 
-.hero__tagline {
-  font-size: clamp(18px, 4.5vw, 24px);
+/* Primary Hero message — always one horizontal line */
+.hero__heading {
+  font-family: var(--font);
+  font-size: clamp(20px, calc((100vw - 48px) / 15.4), 36px);
   font-style: normal;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--white);
-  margin-top: 4px;
-  margin-bottom: 16px;
-  line-height: 1.42;
-  text-shadow: 0 1px 14px rgba(0,0,0,0.24);
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 0 0 14px;
+  white-space: nowrap;
+  max-width: 100%;
+  text-shadow: 0 4px 36px rgba(0,0,0,0.42), 0 1px 8px rgba(0,0,0,0.24);
 }
 
 .hero__desc {
   font-size: 15px;
   font-weight: 400;
-  color: rgba(255,255,255,0.64);
+  color: rgba(255,255,255,0.72);
   line-height: 1.6;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
+  text-shadow: 0 1px 12px rgba(0,0,0,0.28);
+}
+
+@media (max-width: 639px) {
+  /* Mobile overlay: smooth LTR + gentle bottom fade — no solid text block */
+  .hero__overlay {
+    background:
+      linear-gradient(
+        to right,
+        rgba(6, 8, 20, 0.52) 0%,
+        rgba(6, 8, 20, 0.34) 20%,
+        rgba(6, 8, 20, 0.16) 42%,
+        rgba(6, 8, 20, 0.05) 64%,
+        rgba(6, 8, 20, 0.00) 86%
+      ),
+      linear-gradient(
+        to top,
+        rgba(6, 8, 20, 0.40) 0%,
+        rgba(6, 8, 20, 0.22) 20%,
+        rgba(6, 8, 20, 0.08) 40%,
+        rgba(6, 8, 20, 0.00) 62%
+      ),
+      linear-gradient(
+        to bottom,
+        rgba(6, 8, 20, 0.26) 0%,
+        transparent 16%
+      );
+  }
+  .hero__vignette {
+    height: 110px;
+    background: linear-gradient(to top, rgba(6,8,20,0.16) 0%, transparent 100%);
+  }
 }
 
 .hero__actions {
@@ -723,94 +848,37 @@ address { font-style: normal; }
   .qa-wrap { padding: 0 48px 60px; }
 }
 
-/* ─── Mobile: centred focus carousel (<640px) ──────────────── */
+/* ─── Mobile: reuse shared .prem-carousel__track (<640px) ──── */
 @media (max-width: 639px) {
+  /* Match .container inset so the shared track’s -18px bleed
+     reaches the viewport edge the same way Fleet does. */
   .qa-wrap {
-    padding-inline: 0;
-    /* keep bottom padding and negative-margin hero overlap */
+    padding-inline: 18px;
     padding-bottom: 48px;
-    overflow: visible;
   }
 
+  /* Override desktop centering so the first card is reachable.
+     Shared .prem-carousel__track defaults to flex-start. */
   .qa-grid {
-    display: flex;
-    flex-wrap: nowrap;
     justify-content: flex-start;
-    overflow-x: auto;
-    overflow-y: visible;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    gap: 14px;
-    /* Top/bottom padding gives box-shadow breathing room;
-       inline padding centres first and last card in the viewport */
-    padding: 12px calc(50% - 37vw) 20px;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    max-width: none;
-    margin-inline: 0;
-  }
-  .qa-grid::-webkit-scrollbar { display: none; }
-
-  /* Each card: 74vw wide, snaps to centre, scales down when inactive */
-  .qa-card {
-    flex: 0 0 74vw;
-    scroll-snap-align: center;
-    /* Override the entrance-animation opacity so cards appear
-       immediately without waiting for the JS stagger */
-    opacity: 1 !important;
-    animation: none !important;
-    transform: scale(0.84);
-    transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
-                box-shadow 320ms ease;
-    will-change: transform;
   }
 
-  /* Centred (active) card — 1/0.84 ≈ 19% larger than neighbours */
-  .qa-card.qa-card--active {
-    transform: scale(1);
-    box-shadow: 0 10px 36px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.06);
+  /* Suppress desktop icon/arrow hover on touch. Card scale/opacity
+     is owned by .prem-carousel__card. */
+  .qa-card.shown:hover .qa-card__icon {
+    transform: none;
+    background: rgba(204,34,40,0.07);
   }
-
-  /* Suppress desktop hover-lift on touch screens */
-  .qa-card.shown:hover                     { transform: scale(0.84); box-shadow: 0 4px 22px rgba(0,0,0,0.09), 0 1px 5px rgba(0,0,0,0.05); }
-  .qa-card.shown.qa-card--active:hover     { transform: scale(1); }
-  .qa-card.shown:hover .qa-card__icon,
-  .qa-card.shown.qa-card--active:hover .qa-card__icon { transform: none; background: rgba(204,34,40,0.07); }
-  .qa-card.shown:hover .qa-card__arrow,
-  .qa-card.shown.qa-card--active:hover .qa-card__arrow {
+  .qa-card.shown:hover .qa-card__arrow {
     background: rgba(204,34,40,0.07);
     border-color: rgba(204,34,40,0.20);
     color: var(--red);
     transform: none;
   }
-}
 
-/* ─── QA Pagination dots (hidden desktop/tablet) ────────────── */
-.qa-dots {
-  display: none;
-  justify-content: center;
-  align-items: center;
-  gap: 7px;
-  margin-top: 16px;
-  padding-inline: 16px;
-}
-.qa-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--border-2);
-  padding: 0;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: width var(--t-base), background var(--t-base), border-radius var(--t-base);
-}
-.qa-dot--active {
-  width: 22px;
-  border-radius: 4px;
-  background: var(--red);
-}
-@media (max-width: 639px) {
-  .qa-dots { display: flex; }
+  #quick-links .prem-carousel__dots {
+    margin-top: 16px;
+  }
 }
 
 
@@ -822,11 +890,11 @@ address { font-style: normal; }
   background: var(--off-white);
 }
 
-/* Grid — 4 columns desktop, narrows via max-width queries below */
+/* Grid — 6 equal columns on wide desktop, narrows via queries below */
 .fleet-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 14px;
 }
 
 /* Card base */
@@ -839,12 +907,12 @@ address { font-style: normal; }
   display: flex;
   flex-direction: column;
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(16px);
 }
 
 /* Entrance animation — added by JS */
 .fleet-card.fleet-in {
-  animation: fleetFadeUp 480ms ease forwards;
+  animation: fleetFadeUp 480ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Stable hover state — swapped in after animation completes */
@@ -859,7 +927,7 @@ address { font-style: normal; }
 }
 
 @keyframes fleetFadeUp {
-  from { opacity: 0; transform: translateY(28px); }
+  from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -980,6 +1048,22 @@ address { font-style: normal; }
 .fleet-card__cta:hover { color: var(--red-dark); }
 .fleet-card__cta:hover svg { transform: translateX(4px); }
 
+/* Homepage cards: sit 💬 immediately left of the label, same as
+   All Categories (`💬 ` + text as one unit). The shared rule above
+   uses space-between, which parked the emoji on the far left. */
+.fleet .fleet-card__cta {
+  justify-content: flex-end;
+  gap: 0;
+}
+
+/* ── Laptop / small desktop: 3+2 so no card sits alone ──────── */
+@media (max-width: 1099px) {
+  .fleet-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+}
+
 /* ── Tablet: 2 columns ──────────────────────────────────────── */
 @media (max-width: 900px) {
   .fleet-grid {
@@ -995,6 +1079,21 @@ address { font-style: normal; }
   }
   /* Suppress image zoom on touch — hover-lift handled by shared carousel */
   .fleet-card.fleet-shown:hover .fleet-card__img-wrap img {
+    transform: none;
+  }
+
+  /* Soft one-time reveal for the horizontal card track as the
+     section scrolls into view. Individual cards keep their own
+     carousel opacity/scale state (active/far); this only fades +
+     settles the track itself, so the two systems never compete. */
+  .fleet-grid {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 460ms cubic-bezier(0.16, 1, 0.3, 1),
+                transform 460ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .fleet-grid.fleet-grid--shown {
+    opacity: 1;
     transform: none;
   }
 }
@@ -1074,6 +1173,7 @@ address { font-style: normal; }
   flex-direction: column;
   text-decoration: none;
   color: inherit;
+  min-width: 0;
   opacity: 0;
   transform: translateY(28px);
 }
@@ -1147,6 +1247,35 @@ address { font-style: normal; }
   flex: 1;
 }
 
+/* Policy bullets */
+.info-card__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+.info-card__list li {
+  position: relative;
+  padding-left: 13px;
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.45;
+  font-weight: 500;
+}
+.info-card__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.52em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--red);
+}
+
 /* CTA — identical to fleet-card__cta */
 .info-card__cta {
   display: flex;
@@ -1165,14 +1294,21 @@ address { font-style: normal; }
 .info-card:hover .info-card__cta     { color: var(--red-dark); }
 .info-card:hover .info-card__cta svg { transform: translateX(4px); }
 
-/* ── Tablet: still 3 columns but tighter gap ─────────────── */
-@media (max-width: 900px) {
-  .info-grid { gap: 16px; }
+/* ── Tablet: 2 columns so 7 cards stay even (4+3) ─────────── */
+@media (min-width: 640px) and (max-width: 899px) {
+  .info-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ── Desktop: 4+3 so the seventh card is not left alone ──── */
+@media (min-width: 900px) {
+  .info-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
 /* ── Mobile ───────────────────────────────────────────────── */
 @media (max-width: 639px) {
   .guide { padding: 52px 0 56px; }
+  .info-card__icon-wrap { height: 96px; }
+  .info-card__list { gap: 4px; }
   /* Suppress CTA arrow animation on touch */
   .info-card.info-shown:hover .info-card__cta svg { transform: none; }
 }
@@ -1182,14 +1318,14 @@ address { font-style: normal; }
    EXPLORE KOS
    ═══════════════════════════════════════════════════════════════ */
 .explore {
-  padding: 32px 0 32px;
+  padding: 32px 0 40px;
   background: var(--white);
   border-top: 1px solid var(--border);
 }
 
 .explore-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-wrap: nowrap;
   gap: 10px;
 }
 
@@ -1201,6 +1337,16 @@ address { font-style: normal; }
   align-items: flex-end;
   min-height: 155px;
   text-decoration: none;
+  width: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
   transition: transform var(--t-base);
 }
 .explore-card:hover { transform: translateY(-2px); }
@@ -1226,7 +1372,7 @@ address { font-style: normal; }
 .explore-card__content {
   position: relative;
   z-index: 2;
-  padding: 12px 48px 12px 14px;
+  padding: 14px 48px 16px 14px;
   display: flex;
   flex-direction: column;
   gap: 3px;
@@ -1262,6 +1408,232 @@ address { font-style: normal; }
   .prem-carousel__track .explore-card {
     min-height: 210px;
   }
+}
+
+/* ── Tablet / desktop: keep Explore Kos as a horizontal carousel ── */
+@media (min-width: 640px) {
+  #explore .prem-carousel__dots { display: flex; }
+
+  #explore .prem-carousel__track {
+    display: flex;
+    flex-wrap: nowrap;
+    margin-inline: -24px;
+    padding: 16px 18vw 28px;
+    gap: 12px;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  #explore .prem-carousel__track::-webkit-scrollbar { display: none; }
+
+  #explore .prem-carousel__track .prem-carousel__card {
+    flex: 0 0 42vw;
+    max-width: 340px;
+    min-width: 240px;
+    scroll-snap-align: center;
+    opacity: 0.85;
+    transform: scale(0.93);
+    transition:
+      transform  0.36s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      opacity    0.36s ease,
+      box-shadow 0.36s ease;
+    will-change: transform;
+  }
+
+  #explore .prem-carousel__track .prem-carousel__card.prem-carousel__card--active {
+    opacity: 1;
+    transform: scale(1) translateY(-4px);
+    box-shadow: 0 14px 48px rgba(0,0,0,0.18);
+  }
+
+  #explore .prem-carousel__track .prem-carousel__card.prem-carousel__card--far {
+    opacity: 0.70;
+    transform: scale(0.88);
+  }
+
+  #explore .prem-carousel__track .explore-card:hover {
+    transform: scale(0.93);
+  }
+  #explore .prem-carousel__track .explore-card.prem-carousel__card--active:hover {
+    transform: scale(1) translateY(-4px);
+    box-shadow: 0 14px 48px rgba(0,0,0,0.18);
+  }
+  #explore .prem-carousel__track .explore-card.prem-carousel__card--far:hover {
+    transform: scale(0.88);
+  }
+}
+
+@media (min-width: 960px) {
+  #explore .prem-carousel__track {
+    margin-inline: -36px;
+    padding: 18px 16vw 32px;
+    gap: 14px;
+  }
+  #explore .prem-carousel__track .prem-carousel__card {
+    flex: 0 0 300px;
+    max-width: 320px;
+  }
+}
+
+@media (min-width: 1280px) {
+  #explore .prem-carousel__track {
+    margin-inline: -48px;
+  }
+}
+
+/* ── Destination details modal ──────────────────────────── */
+.explore-modal__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(10,10,22,0.58);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  transition: opacity 240ms ease;
+}
+.explore-modal__overlay[hidden] { display: none; }
+.explore-modal--open { opacity: 1; }
+
+.explore-modal__panel {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 28px 80px rgba(0,0,0,0.22), 0 0 0 1px rgba(0,0,0,0.04);
+  width: 100%;
+  max-width: 560px;
+  max-height: calc(100dvh - 32px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  position: relative;
+  transform: translateY(28px) scale(0.97);
+  opacity: 0;
+  transition: transform 300ms cubic-bezier(0.34,1.25,0.64,1), opacity 240ms ease;
+}
+.explore-modal--open .explore-modal__panel {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.explore-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  background: rgba(10,10,22,0.42);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.explore-modal__close:hover {
+  background: rgba(10,10,22,0.62);
+  color: var(--white);
+}
+
+.explore-modal__image-wrap {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  background: var(--dark);
+  flex-shrink: 0;
+}
+.explore-modal__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.explore-modal__body {
+  padding: 22px 24px 24px;
+}
+
+.explore-modal__title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.2;
+  margin: 0 0 10px;
+}
+
+.explore-modal__desc {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.65;
+  margin: 0 0 18px;
+}
+
+.explore-modal__highlights-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 10px;
+}
+
+.explore-modal__highlights {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 22px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 14px;
+}
+.explore-modal__highlights li {
+  position: relative;
+  padding-left: 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.4;
+}
+.explore-modal__highlights li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.52em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--red);
+}
+
+.explore-modal__maps {
+  width: 100%;
+  justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .explore-modal__image-wrap { height: 280px; }
+  .explore-modal__body { padding: 26px 28px 28px; }
+  .explore-modal__title { font-size: 24px; }
+}
+
+@media (max-width: 480px) {
+  .explore-modal__overlay { padding: 12px; align-items: flex-end; }
+  .explore-modal__panel {
+    max-height: calc(100dvh - 16px);
+    border-radius: var(--radius-xl) var(--radius-xl) 14px 14px;
+  }
+  .explore-modal__image-wrap { height: 200px; }
+  .explore-modal__body { padding: 18px 18px 20px; }
+  .explore-modal__title { font-size: 20px; }
+  .explore-modal__highlights { grid-template-columns: 1fr; }
 }
 
 
@@ -1375,6 +1747,9 @@ address { font-style: normal; }
   color: var(--text);
   display: block;
   margin-bottom: 2px;
+}
+.ftr-info__sublabel {
+  margin-top: 8px;
 }
 .ftr-info__body p {
   font-size: 12.5px;
@@ -1606,8 +1981,7 @@ address { font-style: normal; }
   /* Guide — fix negative margin to match 640px+ container padding */
   .guide-grid { margin-inline: -24px; padding-inline: 24px; }
 
-  /* Explore — 4 columns on tablet */
-  .explore-grid { grid-template-columns: repeat(4, 1fr); }
+  /* Explore — taller cards in the horizontal carousel */
   .explore-card { min-height: 200px; }
   .explore-card__content strong { font-size: 14px; }
 
@@ -1652,7 +2026,7 @@ address { font-style: normal; }
   .guide-card { flex: unset; min-width: 0; scroll-snap-align: none; }
   .guide-card h4 { font-size: 14px; }
 
-  /* Explore */
+  /* Explore — keep the horizontal carousel; taller cards */
   .explore { padding: 40px 0; }
   .explore-card { min-height: 230px; }
 
@@ -1813,6 +2187,8 @@ address { font-style: normal; }
   flex-direction: column;
   gap: 6px;
 }
+.avail-modal__field--span { grid-column: 1 / -1; }
+.avail-modal__field[hidden] { display: none; }
 .avail-modal__label {
   font-size: 10.5px;
   font-weight: 700;
@@ -1837,6 +2213,10 @@ address { font-style: normal; }
   -webkit-appearance: none;
 }
 .avail-modal__input:focus { border-color: var(--red); }
+select.avail-modal__input {
+  appearance: auto;
+  -webkit-appearance: menulist;
+}
 
 /* Rental duration — auto-revealed */
 .avail-modal__duration-row {
