@@ -1146,13 +1146,38 @@
   var availVehicleName  = document.getElementById('availVehicleName');
   var availDurationRow  = document.getElementById('availDurationRow');
   var availDurationValue= document.getElementById('availDurationValue');
+  var availPriceBlock   = document.getElementById('availPriceBlock');
+  var availPriceRow     = document.getElementById('availPriceRow');
+  var availPriceValue   = document.getElementById('availPriceValue');
+  var availInsuranceNote = document.getElementById('availInsuranceNote');
+  var availContactPriceNote = document.getElementById('availContactPriceNote');
   var availHotel        = document.getElementById('availHotel');
   var availHotelOtherWrap = document.getElementById('availHotelOtherWrap');
   var availHotelOther   = document.getElementById('availHotelOther');
   var HOTEL_OTHER       = '__other__';
 
-  var activeGroup   = '';
-  var activeVehicle = '';
+  var activeGroup     = '';
+  var activeGroupCode = '';
+  var activeVehicle   = '';
+
+  /* High Season totals by vehicle group and rental days.
+     Additional seasons can be added here later without changing lookupPrice. */
+  var ACTIVE_PRICE_SEASON = 'high';
+  var PRICE_SEASONS = {
+    high: {
+      A:  { 1: 60,   2: 115,  3: 170,  4: 225,  5: 280,  6: 335,  7: 390 },
+      B:  { 1: 65,   2: 125,  3: 185,  4: 245,  5: 305,  6: 365,  7: 425 },
+      B1: { 1: 70,   2: 135,  3: 200,  4: 265,  5: 330,  6: 395,  7: 460 },
+      C:  { 1: 75,   2: 145,  3: 215,  4: 285,  5: 355,  6: 425,  7: 495 },
+      C1: { 1: 80,   2: 155,  3: 230,  4: 305,  5: 380,  6: 455,  7: 530 },
+      D:  { 1: 90,   2: 175,  3: 260,  4: 345,  5: 430,  6: 515,  7: 600 },
+      D1: { 1: 95,   2: 185,  3: 275,  4: 365,  5: 455,  6: 545,  7: 635 },
+      E:  { 1: 100,  2: 195,  3: 290,  4: 385,  5: 480,  6: 575,  7: 670 },
+      F:  { 1: 105,  2: 205,  3: 305,  4: 405,  5: 505,  6: 605,  7: 705 },
+      G:  { 1: 115,  2: 225,  3: 335,  4: 445,  5: 560,  6: 670,  7: 780 },
+      H:  { 1: 200,  2: 395,  3: 590,  4: 785,  5: 980,  6: 1175, 7: 1370 }
+    }
+  };
 
   /* ── Helpers ─────────────────────────────────────────────────── */
 
@@ -1182,6 +1207,62 @@
     return days === 1 ? t('avail.duration.one') : t('avail.duration.many', { n: days });
   }
 
+  function formatPrice(amount) {
+    var whole = String(Math.round(amount));
+    var out = '';
+    while (whole.length > 3) {
+      out = ',' + whole.slice(-3) + out;
+      whole = whole.slice(0, -3);
+    }
+    return '€' + whole + out;
+  }
+
+  function lookupPrice(groupCode, days) {
+    var season = PRICE_SEASONS[ACTIVE_PRICE_SEASON];
+    if (!season || !groupCode || days < 1 || days > 7) return null;
+    var table = season[String(groupCode).toUpperCase()];
+    if (!table) return null;
+    var amount = table[days];
+    return typeof amount === 'number' ? amount : null;
+  }
+
+  function hidePriceBlock() {
+    if (availPriceBlock) availPriceBlock.setAttribute('hidden', '');
+    if (availPriceRow) availPriceRow.removeAttribute('hidden');
+    if (availInsuranceNote) availInsuranceNote.removeAttribute('hidden');
+    if (availContactPriceNote) availContactPriceNote.setAttribute('hidden', '');
+    if (availPriceValue) availPriceValue.textContent = '—';
+  }
+
+  function updatePrice(days) {
+    if (!availPriceBlock) return;
+    if (!days || days < 1) {
+      hidePriceBlock();
+      return;
+    }
+
+    if (days >= 8) {
+      availPriceBlock.removeAttribute('hidden');
+      if (availPriceRow) availPriceRow.setAttribute('hidden', '');
+      if (availInsuranceNote) availInsuranceNote.setAttribute('hidden', '');
+      if (availContactPriceNote) availContactPriceNote.removeAttribute('hidden');
+      if (availPriceValue) availPriceValue.textContent = '—';
+      return;
+    }
+
+    var amount = lookupPrice(activeGroupCode, days);
+    if (amount == null) {
+      hidePriceBlock();
+      return;
+    }
+
+    availPriceBlock.removeAttribute('hidden');
+    if (availPriceRow) availPriceRow.removeAttribute('hidden');
+    if (availPriceValue) availPriceValue.textContent = formatPrice(amount);
+    if (availInsuranceNote) availInsuranceNote.removeAttribute('hidden');
+    if (availContactPriceNote) availContactPriceNote.setAttribute('hidden', '');
+  }
+
   function updateDuration() {
     var pickup = availPickup ? availPickup.value : '';
     var ret    = availReturn ? availReturn.value : '';
@@ -1192,6 +1273,7 @@
     } else {
       if (availDurationRow)   availDurationRow.setAttribute('hidden', '');
     }
+    updatePrice(days);
   }
 
   function selectedHotel() {
@@ -1235,22 +1317,32 @@
   function buildWAMessage(group, vehicle, pickup, ret, hotel) {
     var days = calcDays(pickup, ret);
     var hotelSection = hotel ? t('avail.wa.hotel', { hotel: hotel }) : '';
+    var amount = lookupPrice(activeGroupCode, days);
+    var priceSection = '';
+    var ask = t('avail.wa.ask');
+    if (amount != null) {
+      priceSection = t('avail.wa.price', { price: formatPrice(amount) });
+      ask = t('avail.wa.ask.priced');
+    }
     return t('avail.wa.body', {
       group: group,
       vehicle: vehicle,
       pickup: formatDate(pickup),
       return: formatDate(ret),
       duration: durationLabel(days),
-      hotelSection: hotelSection
+      hotelSection: hotelSection,
+      priceSection: priceSection,
+      ask: ask
     });
   }
 
   /* ── Open / Close ────────────────────────────────────────────── */
 
-  function openAvailModal(group, vehicle) {
+  function openAvailModal(group, vehicle, groupCode) {
     if (!availModal) return;
-    activeGroup   = group;
-    activeVehicle = vehicle;
+    activeGroup     = group;
+    activeGroupCode = groupCode ? String(groupCode).toUpperCase() : '';
+    activeVehicle   = vehicle;
 
     /* Populate header identity */
     if (availGroupBadge)  availGroupBadge.textContent  = group;
@@ -1261,6 +1353,7 @@
     if (availPickup) { availPickup.min = today; availPickup.value = ''; availPickup.classList.remove('avail-modal__input--error'); }
     if (availReturn) { availReturn.min = today; availReturn.value = ''; availReturn.classList.remove('avail-modal__input--error'); }
     if (availDurationRow) availDurationRow.setAttribute('hidden', '');
+    hidePriceBlock();
     resetHotel();
 
     /* Show + animate */
@@ -1297,7 +1390,7 @@
       var vehicle = vehicleName
         ? t('fleet.orSimilar', { name: vehicleName })
         : (btn.getAttribute('data-vehicle') || '');
-      openAvailModal(group, vehicle);
+      openAvailModal(group, vehicle, groupCode);
     }
   });
 
