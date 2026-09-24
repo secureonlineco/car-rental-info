@@ -111,32 +111,42 @@
 
     <div class="hero__slide active" aria-hidden="true">
       <picture>
+        <source media="(max-width: 639px)" type="image/webp" srcset="assets/images/hero/hero-kos-zia-mobile.webp" />
         <source media="(max-width: 639px)" srcset="assets/images/hero/hero-kos-zia-mobile.png" />
-        <img class="hero__img" src="assets/images/hero/hero-kos-zia-desktop.png" alt="" />
+        <source type="image/webp" srcset="assets/images/hero/hero-kos-zia-desktop.webp" />
+        <img class="hero__img" src="assets/images/hero/hero-kos-zia-desktop.png" alt="" fetchpriority="high" decoding="async" />
       </picture>
     </div>
     <div class="hero__slide" aria-hidden="true">
       <picture>
-        <source media="(max-width: 639px)" srcset="assets/images/hero/hero-kos-kefalos-mobile.png" />
-        <img class="hero__img" src="assets/images/hero/hero-kos-kefalos-desktop.png" alt="" />
+        <source media="(max-width: 639px)" type="image/webp" data-srcset="assets/images/hero/hero-kos-kefalos-mobile.webp" />
+        <source media="(max-width: 639px)" data-srcset="assets/images/hero/hero-kos-kefalos-mobile.png" />
+        <source type="image/webp" data-srcset="assets/images/hero/hero-kos-kefalos-desktop.webp" />
+        <img class="hero__img" data-src="assets/images/hero/hero-kos-kefalos-desktop.png" alt="" decoding="async" />
       </picture>
     </div>
     <div class="hero__slide" aria-hidden="true">
       <picture>
-        <source media="(max-width: 639px)" srcset="assets/images/hero/hero-kos-town-mobile.png" />
-        <img class="hero__img" src="assets/images/hero/hero-kos-town-desktop.png" alt="" />
+        <source media="(max-width: 639px)" type="image/webp" data-srcset="assets/images/hero/hero-kos-town-mobile.webp" />
+        <source media="(max-width: 639px)" data-srcset="assets/images/hero/hero-kos-town-mobile.png" />
+        <source type="image/webp" data-srcset="assets/images/hero/hero-kos-town-desktop.webp" />
+        <img class="hero__img" data-src="assets/images/hero/hero-kos-town-desktop.png" alt="" decoding="async" />
       </picture>
     </div>
     <div class="hero__slide" aria-hidden="true">
       <picture>
-        <source media="(max-width: 639px)" srcset="assets/images/hero/hero-kos-beach-mobile.png" />
-        <img class="hero__img" src="assets/images/hero/hero-kos-beach-desktop.png" alt="" />
+        <source media="(max-width: 639px)" type="image/webp" data-srcset="assets/images/hero/hero-kos-beach-mobile.webp" />
+        <source media="(max-width: 639px)" data-srcset="assets/images/hero/hero-kos-beach-mobile.png" />
+        <source type="image/webp" data-srcset="assets/images/hero/hero-kos-beach-desktop.webp" />
+        <img class="hero__img" data-src="assets/images/hero/hero-kos-beach-desktop.png" alt="" decoding="async" />
       </picture>
     </div>
     <div class="hero__slide" aria-hidden="true">
       <picture>
-        <source media="(max-width: 639px)" srcset="assets/images/hero/hero-kos-road-mobile.png" />
-        <img class="hero__img" src="assets/images/hero/hero-kos-road-desktop.png" alt="" />
+        <source media="(max-width: 639px)" type="image/webp" data-srcset="assets/images/hero/hero-kos-road-mobile.webp" />
+        <source media="(max-width: 639px)" data-srcset="assets/images/hero/hero-kos-road-mobile.png" />
+        <source type="image/webp" data-srcset="assets/images/hero/hero-kos-road-desktop.webp" />
+        <img class="hero__img" data-src="assets/images/hero/hero-kos-road-desktop.png" alt="" decoding="async" />
       </picture>
     </div>
 
@@ -325,6 +335,7 @@
             <ul class="info-card__list">
               <li data-i18n="guide.insurance.l1">Comprehensive insurance</li>
               <li data-i18n="guide.insurance.l2">Excess up to €300</li>
+              <li data-i18n="guide.insurance.deposit">No security deposit or guarantee is required for the insurance excess.</li>
               <li data-i18n="guide.insurance.l3">For a single-vehicle accident caused by the driver, with no other vehicle involved, liability may be up to €300 depending on the damage</li>
               <li data-i18n="guide.insurance.l4">Coverage applies when traffic rules are followed</li>
             </ul>
@@ -397,7 +408,7 @@
             <ul class="info-card__list">
               <li data-i18n="guide.payment.l1">Rental day: 08:30–21:00</li>
               <li data-i18n="guide.payment.l2">Payment by cash or card</li>
-              <li data-i18n="guide.payment.l3">No security deposit</li>
+              <li data-i18n="guide.payment.l3">No security deposit or guarantee is required for the insurance excess.</li>
             </ul>
           </div>
         </article>
