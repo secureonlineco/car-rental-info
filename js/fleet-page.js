@@ -141,9 +141,18 @@
     );
   }
 
+  function webpName(img) {
+    return img.replace(/(\.png)+$/i, '.webp');
+  }
+
   function imageMarkup(v) {
     if (v.img) {
-      return '<img src="' + IMG_BASE + v.img + '" alt="' + t('fleet.cardAria', { group: v.group, name: v.name }) + '" loading="lazy" />';
+      return (
+        '<picture>' +
+          '<source type="image/webp" srcset="' + IMG_BASE + webpName(v.img) + '">' +
+          '<img src="' + IMG_BASE + v.img + '" alt="' + t('fleet.cardAria', { group: v.group, name: v.name }) + '" width="1536" height="1024" loading="lazy" decoding="async" />' +
+        '</picture>'
+      );
     }
     return (
       '<div class="fleetpg-noimg" role="img" aria-label="' + t('fleet.photoSoonAria', { name: v.name }) + '">' +
