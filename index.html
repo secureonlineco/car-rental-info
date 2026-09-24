@@ -82,8 +82,8 @@
         </button>
       </div>
       <nav class="mob-menu__nav" aria-label="Main navigation" data-i18n-aria="nav.mainAria">
-        <a href="#fleet"        class="mob-menu__link" data-i18n="nav.fleet">Our Fleet</a>
         <a href="#rental-guide" class="mob-menu__link" data-i18n="nav.rentalGuide">Insurance & Rental Info</a>
+        <a href="#fleet"        class="mob-menu__link" data-i18n="nav.fleet">Our Fleet</a>
         <a href="#explore"      class="mob-menu__link" data-i18n="nav.explore">Explore Kos</a>
         <a href="#emergency"    class="mob-menu__link" data-i18n="nav.emergency">Emergency</a>
         <a href="#contact"      class="mob-menu__link" data-i18n="nav.contact">Contact</a>
@@ -188,6 +188,25 @@
   <section class="qa-wrap" id="quick-links" aria-label="Quick access navigation" data-i18n-aria="qa.aria">
     <div class="qa-grid prem-carousel__track">
 
+      <!-- 2. Insurance -->
+      <a href="#rental-guide" class="qa-card prem-carousel__card" aria-label="Insurance and rental information" data-i18n-aria="qa.guide.aria">
+        <div class="qa-card__icon" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+            <path d="M17 3.5L6.5 7.5v6.5c0 6.28 4.5 11.5 10.5 13.5 6-2 10.5-7.22 10.5-13.5V7.5L17 3.5z" stroke="#CC2228" stroke-width="1.85" stroke-linejoin="round"/>
+            <path d="M12.5 16l3 3L22 12" stroke="#CC2228" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="qa-card__body">
+          <strong class="qa-card__title" data-i18n="qa.guide.title">Insurance & Rental Info</strong>
+          <span class="qa-card__desc" data-i18n="qa.guide.desc">Coverage & what to know</span>
+        </div>
+        <div class="qa-card__arrow" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9.5 5L13 8l-3.5 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
       <!-- 1. Our Fleet -->
       <a href="#fleet" class="qa-card prem-carousel__card" aria-label="View our fleet of vehicles" data-i18n-aria="qa.fleet.aria">
         <div class="qa-card__icon" aria-hidden="true">
@@ -202,25 +221,6 @@
         <div class="qa-card__body">
           <strong class="qa-card__title" data-i18n="qa.fleet.title">Our Fleet</strong>
           <span class="qa-card__desc" data-i18n="qa.fleet.desc">View all vehicles</span>
-        </div>
-        <div class="qa-card__arrow" aria-hidden="true">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-            <path d="M3 8h10M9.5 5L13 8l-3.5 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-      </a>
-
-      <!-- 2. Insurance -->
-      <a href="#rental-guide" class="qa-card prem-carousel__card" aria-label="Insurance and rental information" data-i18n-aria="qa.guide.aria">
-        <div class="qa-card__icon" aria-hidden="true">
-          <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
-            <path d="M17 3.5L6.5 7.5v6.5c0 6.28 4.5 11.5 10.5 13.5 6-2 10.5-7.22 10.5-13.5V7.5L17 3.5z" stroke="#CC2228" stroke-width="1.85" stroke-linejoin="round"/>
-            <path d="M12.5 16l3 3L22 12" stroke="#CC2228" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="qa-card__body">
-          <strong class="qa-card__title" data-i18n="qa.guide.title">Insurance & Rental Info</strong>
-          <span class="qa-card__desc" data-i18n="qa.guide.desc">Coverage & what to know</span>
         </div>
         <div class="qa-card__arrow" aria-hidden="true">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
@@ -299,6 +299,198 @@
 
   </section>
 
+  <!-- ═══════════════════════ INSURANCE & RENTAL INFORMATION ══ -->
+  <section class="guide" id="rental-guide">
+    <div class="container">
+
+      <div class="sec-head">
+        <h2 class="sec-title" data-i18n="guide.heading">INSURANCE &amp; RENTAL INFORMATION</h2>
+      </div>
+
+      <div class="info-grid prem-carousel__track" role="list">
+
+        <!-- 4 · Insurance -->
+        <article class="info-card prem-carousel__card" role="listitem">
+          <div class="info-card__icon-wrap" aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 30 30" fill="none">
+              <path d="M15 3L5 7.5v7.5c0 6 4.2 11.6 10 13 5.8-1.4 10-7 10-13V7.5L15 3z" stroke="#CC2228" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M10.5 15.5l3.5 3.5 6-7" stroke="#CC2228" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="info-card__body">
+            <div class="info-card__head">
+              <h3 class="info-card__title" data-i18n="guide.insurance.title">Insurance</h3>
+              <p class="info-card__example" data-i18n="guide.insurance.example">Comprehensive · excess up to €300</p>
+            </div>
+            <ul class="info-card__list">
+              <li data-i18n="guide.insurance.l1">Comprehensive insurance</li>
+              <li data-i18n="guide.insurance.l2">Excess up to €300</li>
+              <li data-i18n="guide.insurance.l3">For a single-vehicle accident caused by the driver, with no other vehicle involved, liability may be up to €300 depending on the damage</li>
+              <li data-i18n="guide.insurance.l4">Coverage applies when traffic rules are followed</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- 5 · What Is Not Covered -->
+        <article class="info-card prem-carousel__card" role="listitem">
+          <div class="info-card__icon-wrap" aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 30 30" fill="none">
+              <path d="M15 3L5 7.5v7.5c0 6 4.2 11.6 10 13 5.8-1.4 10-7 10-13V7.5L15 3z" stroke="#CC2228" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M11 11.5l8 8M19 11.5l-8 8" stroke="#CC2228" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="info-card__body">
+            <div class="info-card__head">
+              <h3 class="info-card__title" data-i18n="guide.notCovered.title">What Is Not Covered</h3>
+              <p class="info-card__example" data-i18n="guide.notCovered.example">When cover does not apply</p>
+            </div>
+            <ul class="info-card__list">
+              <li data-i18n="guide.notCovered.l1">Alcohol or drugs</li>
+              <li data-i18n="guide.notCovered.l2">Racing</li>
+              <li data-i18n="guide.notCovered.l3">Off-road / unpaved roads</li>
+              <li data-i18n="guide.notCovered.l4">Illegal use</li>
+              <li data-i18n="guide.notCovered.l5">Serious traffic violations</li>
+              <li data-i18n="guide.notCovered.l6">Unauthorized driver</li>
+              <li data-i18n="guide.notCovered.l7">Ferry transport without permission</li>
+              <li data-i18n="guide.notCovered.l8">Interior damage not caused by collision</li>
+              <li data-i18n="guide.notCovered.l9">Lost/damaged key</li>
+              <li data-i18n="guide.notCovered.l10">Vehicle kept beyond the agreed rental period</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- 1 · Driver Requirements -->
+        <article class="info-card prem-carousel__card" role="listitem">
+          <div class="info-card__icon-wrap" aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 30 30" fill="none">
+              <circle cx="15" cy="9" r="4.2" stroke="#CC2228" stroke-width="1.8"/>
+              <path d="M6.5 25.5c1.2-5 4.4-7.5 8.5-7.5s7.3 2.5 8.5 7.5" stroke="#CC2228" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="info-card__body">
+            <div class="info-card__head">
+              <h3 class="info-card__title" data-i18n="guide.driver.title">Driver Requirements</h3>
+              <p class="info-card__example" data-i18n="guide.driver.example">Age 23 · licence 1 year+</p>
+            </div>
+            <ul class="info-card__list">
+              <li data-i18n="guide.driver.l1">Minimum age: 23</li>
+              <li data-i18n="guide.driver.l2">Convertibles &amp; larger vehicles: 25+</li>
+              <li data-i18n="guide.driver.l3">Driving licence held for at least 1 year</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- 2 · Rental & Payment -->
+        <article class="info-card prem-carousel__card" role="listitem">
+          <div class="info-card__icon-wrap" aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 30 30" fill="none">
+              <rect x="4" y="8" width="22" height="15" rx="2.2" stroke="#CC2228" stroke-width="1.8"/>
+              <path d="M4 13h22" stroke="#CC2228" stroke-width="1.8"/>
+              <path d="M8.5 18.5h6" stroke="#CC2228" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="info-card__body">
+            <div class="info-card__head">
+              <h3 class="info-card__title" data-i18n="guide.payment.title">Rental &amp; Payment</h3>
+              <p class="info-card__example" data-i18n="guide.payment.example">08:30–21:00 · cash or card</p>
+            </div>
+            <ul class="info-card__list">
+              <li data-i18n="guide.payment.l1">Rental day: 08:30–21:00</li>
+              <li data-i18n="guide.payment.l2">Payment by cash or card</li>
+              <li data-i18n="guide.payment.l3">No security deposit</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- 3 · Additional Driver -->
+        <article class="info-card prem-carousel__card" role="listitem">
+          <div class="info-card__icon-wrap" aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 30 30" fill="none">
+              <circle cx="11" cy="9" r="3.4" stroke="#CC2228" stroke-width="1.8"/>
+              <path d="M4.5 24.5c1-4.2 3.6-6.3 6.5-6.3s5.5 2.1 6.5 6.3" stroke="#CC2228" stroke-width="1.8" stroke-linecap="round"/>
+              <circle cx="20.5" cy="10.5" r="2.8" stroke="#CC2228" stroke-width="1.8"/>
+              <path d="M17.2 24.5c.7-3.2 2.6-4.8 4.8-4.8 2.4 0 4.4 1.8 5 4.8" stroke="#CC2228" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="info-card__body">
+            <div class="info-card__head">
+              <h3 class="info-card__title" data-i18n="guide.extraDriver.title">Additional Driver</h3>
+              <p class="info-card__example" data-i18n="guide.extraDriver.example">Allowed · no extra charge</p>
+            </div>
+            <ul class="info-card__list">
+              <li data-i18n="guide.extraDriver.l1">Additional driver allowed</li>
+              <li data-i18n="guide.extraDriver.l2">No additional charge</li>
+              <li data-i18n="guide.extraDriver.l3">Driver must meet the applicable driving requirements</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- 6 · Vehicle Use -->
+        <article class="info-card prem-carousel__card" role="listitem">
+          <div class="info-card__icon-wrap" aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 30 30" fill="none">
+              <path d="M6 18.5l2.2-6.2A2 2 0 0110.1 11h9.8a2 2 0 011.9 1.3L24 18.5" stroke="#CC2228" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M4.5 18.5h21" stroke="#CC2228" stroke-width="1.8" stroke-linecap="round"/>
+              <circle cx="9.5" cy="21.5" r="2" stroke="#CC2228" stroke-width="1.8"/>
+              <circle cx="20.5" cy="21.5" r="2" stroke="#CC2228" stroke-width="1.8"/>
+            </svg>
+          </div>
+          <div class="info-card__body">
+            <div class="info-card__head">
+              <h3 class="info-card__title" data-i18n="guide.use.title">Vehicle Use</h3>
+              <p class="info-card__example" data-i18n="guide.use.example">Roads, smoking and return</p>
+            </div>
+            <ul class="info-card__list">
+              <li data-i18n="guide.use.l1">No smoking</li>
+              <li data-i18n="guide.use.l2">No dirt or unpaved roads</li>
+              <li data-i18n="guide.use.l3">No ferry transport to another island without permission</li>
+              <li data-i18n="guide.use.l4">Follow all traffic rules and posted signs</li>
+              <li data-i18n="guide.use.l5">Traffic fines are the renter’s responsibility</li>
+              <li data-i18n="guide.use.l6">Return the vehicle with the interior clean</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- 7 · Cancellation -->
+        <article class="info-card prem-carousel__card" role="listitem">
+          <div class="info-card__icon-wrap" aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 30 30" fill="none">
+              <rect x="5" y="6.5" width="20" height="18.5" rx="2.2" stroke="#CC2228" stroke-width="1.8"/>
+              <path d="M5 12h20" stroke="#CC2228" stroke-width="1.8"/>
+              <path d="M10 4.5v4M20 4.5v4" stroke="#CC2228" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M11.5 18.2l2.4 2.4 5.2-5.4" stroke="#CC2228" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="info-card__body">
+            <div class="info-card__head">
+              <h3 class="info-card__title" data-i18n="guide.cancel.title">Cancellation</h3>
+              <p class="info-card__example" data-i18n="guide.cancel.example">Free until 1 day before</p>
+            </div>
+            <ul class="info-card__list">
+              <li data-i18n="guide.cancel.l1">Free cancellation up to one day before rental start</li>
+              <li data-i18n="guide.cancel.l2">Later cancellations are subject to the applicable rental charge</li>
+            </ul>
+          </div>
+        </article>
+
+      
+
+</div><!-- end .info-grid -->
+
+      <!-- Pagination dots — shown on mobile only -->
+      <div class="prem-carousel__dots" role="tablist" aria-label="Rental information cards" data-i18n-aria="guide.carouselAria">
+        <button type="button" class="prem-carousel__dot prem-carousel__dot--active" role="tab" aria-selected="true"  aria-label="Card 1 of 7" data-i18n-aria="qa.cardN" data-i18n-n="1" data-i18n-total="7"></button>
+        <button type="button" class="prem-carousel__dot"                            role="tab" aria-selected="false" aria-label="Card 2 of 7" data-i18n-aria="qa.cardN" data-i18n-n="2" data-i18n-total="7"></button>
+        <button type="button" class="prem-carousel__dot"                            role="tab" aria-selected="false" aria-label="Card 3 of 7" data-i18n-aria="qa.cardN" data-i18n-n="3" data-i18n-total="7"></button>
+        <button type="button" class="prem-carousel__dot"                            role="tab" aria-selected="false" aria-label="Card 4 of 7" data-i18n-aria="qa.cardN" data-i18n-n="4" data-i18n-total="7"></button>
+        <button type="button" class="prem-carousel__dot"                            role="tab" aria-selected="false" aria-label="Card 5 of 7" data-i18n-aria="qa.cardN" data-i18n-n="5" data-i18n-total="7"></button>
+        <button type="button" class="prem-carousel__dot"                            role="tab" aria-selected="false" aria-label="Card 6 of 7" data-i18n-aria="qa.cardN" data-i18n-n="6" data-i18n-total="7"></button>
+        <button type="button" class="prem-carousel__dot"                            role="tab" aria-selected="false" aria-label="Card 7 of 7" data-i18n-aria="qa.cardN" data-i18n-n="7" data-i18n-total="7"></button>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ═══════════════════════ OUR FLEET ════════════════════════ -->
   <section class="fleet" id="fleet" aria-labelledby="fleet-heading">
     <div class="container">
@@ -368,7 +560,7 @@
               </li>
             </ul>
             <button type="button" class="fleet-card__cta" data-group="Group A" data-vehicle="VW Up or Similar" data-group-code="A" data-name="VW Up">
-              💬 <span data-i18n="buttons.checkAvailability">Check Availability</span>
+              💬 <span data-i18n="buttons.checkAvailability">Check Price & Availability</span>
             </button>
           </div>
         </article>
@@ -430,7 +622,7 @@
               </li>
             </ul>
             <button type="button" class="fleet-card__cta" data-group="Group B" data-vehicle="Toyota Aygo X or Similar" data-group-code="B" data-name="Toyota Aygo X">
-              💬 <span data-i18n="buttons.checkAvailability">Check Availability</span>
+              💬 <span data-i18n="buttons.checkAvailability">Check Price & Availability</span>
             </button>
           </div>
         </article>
@@ -490,7 +682,7 @@
               </li>
             </ul>
             <button type="button" class="fleet-card__cta" data-group="Group C1" data-vehicle="VW Polo or Similar" data-group-code="C1" data-name="VW Polo">
-              💬 <span data-i18n="buttons.checkAvailability">Check Availability</span>
+              💬 <span data-i18n="buttons.checkAvailability">Check Price & Availability</span>
             </button>
           </div>
         </article>
@@ -550,7 +742,7 @@
               </li>
             </ul>
             <button type="button" class="fleet-card__cta" data-group="Group F" data-vehicle="MINI Cooper Cabrio or Similar" data-group-code="F" data-name="MINI Cooper Cabrio">
-              💬 <span data-i18n="buttons.checkAvailability">Check Availability</span>
+              💬 <span data-i18n="buttons.checkAvailability">Check Price & Availability</span>
             </button>
           </div>
         </article>
@@ -610,7 +802,7 @@
               </li>
             </ul>
             <button type="button" class="fleet-card__cta" data-group="Group G" data-vehicle="VW ID.4 or Similar" data-group-code="G" data-name="VW ID.4">
-              💬 <span data-i18n="buttons.checkAvailability">Check Availability</span>
+              💬 <span data-i18n="buttons.checkAvailability">Check Price & Availability</span>
             </button>
           </div>
         </article>
@@ -670,7 +862,7 @@
               </li>
             </ul>
             <button type="button" class="fleet-card__cta" data-group="Group H" data-vehicle="Jeep Wrangler 4xe or Similar" data-group-code="H" data-name="Jeep Wrangler 4xe">
-              💬 <span data-i18n="buttons.checkAvailability">Check Availability</span>
+              💬 <span data-i18n="buttons.checkAvailability">Check Price & Availability</span>
             </button>
           </div>
         </article>
@@ -685,196 +877,6 @@
         <button class="prem-carousel__dot"                            role="tab" aria-selected="false" aria-label="Card 4 of 6" data-i18n-aria="fleet.carouselCard" data-i18n-n="4" data-i18n-total="6"></button>
         <button class="prem-carousel__dot"                            role="tab" aria-selected="false" aria-label="Card 5 of 6" data-i18n-aria="fleet.carouselCard" data-i18n-n="5" data-i18n-total="6"></button>
         <button class="prem-carousel__dot"                            role="tab" aria-selected="false" aria-label="Card 6 of 6" data-i18n-aria="fleet.carouselCard" data-i18n-n="6" data-i18n-total="6"></button>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ═══════════════════════ INSURANCE & RENTAL INFORMATION ══ -->
-  <section class="guide" id="rental-guide">
-    <div class="container">
-
-      <div class="sec-head">
-        <h2 class="sec-title" data-i18n="guide.heading">INSURANCE &amp; RENTAL INFORMATION</h2>
-      </div>
-
-      <div class="info-grid prem-carousel__track" role="list">
-
-        <!-- 1 · Driver Requirements -->
-        <article class="info-card prem-carousel__card" role="listitem">
-          <div class="info-card__icon-wrap" aria-hidden="true">
-            <svg width="40" height="40" viewBox="0 0 30 30" fill="none">
-              <circle cx="15" cy="9" r="4.2" stroke="#CC2228" stroke-width="1.8"/>
-              <path d="M6.5 25.5c1.2-5 4.4-7.5 8.5-7.5s7.3 2.5 8.5 7.5" stroke="#CC2228" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div class="info-card__body">
-            <div class="info-card__head">
-              <h3 class="info-card__title" data-i18n="guide.driver.title">Driver Requirements</h3>
-              <p class="info-card__example" data-i18n="guide.driver.example">Age 23 · licence 1 year+</p>
-            </div>
-            <ul class="info-card__list">
-              <li data-i18n="guide.driver.l1">Minimum age: 23</li>
-              <li data-i18n="guide.driver.l2">Convertibles &amp; larger vehicles: 25+</li>
-              <li data-i18n="guide.driver.l3">Driving licence held for at least 1 year</li>
-            </ul>
-          </div>
-        </article>
-
-        <!-- 2 · Rental & Payment -->
-        <article class="info-card prem-carousel__card" role="listitem">
-          <div class="info-card__icon-wrap" aria-hidden="true">
-            <svg width="40" height="40" viewBox="0 0 30 30" fill="none">
-              <rect x="4" y="8" width="22" height="15" rx="2.2" stroke="#CC2228" stroke-width="1.8"/>
-              <path d="M4 13h22" stroke="#CC2228" stroke-width="1.8"/>
-              <path d="M8.5 18.5h6" stroke="#CC2228" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div class="info-card__body">
-            <div class="info-card__head">
-              <h3 class="info-card__title" data-i18n="guide.payment.title">Rental &amp; Payment</h3>
-              <p class="info-card__example" data-i18n="guide.payment.example">08:30–21:00 · cash or card</p>
-            </div>
-            <ul class="info-card__list">
-              <li data-i18n="guide.payment.l1">Rental day: 08:30–21:00</li>
-              <li data-i18n="guide.payment.l2">Payment by cash or card</li>
-              <li data-i18n="guide.payment.l3">No security deposit</li>
-            </ul>
-          </div>
-        </article>
-
-        <!-- 3 · Additional Driver -->
-        <article class="info-card prem-carousel__card" role="listitem">
-          <div class="info-card__icon-wrap" aria-hidden="true">
-            <svg width="40" height="40" viewBox="0 0 30 30" fill="none">
-              <circle cx="11" cy="9" r="3.4" stroke="#CC2228" stroke-width="1.8"/>
-              <path d="M4.5 24.5c1-4.2 3.6-6.3 6.5-6.3s5.5 2.1 6.5 6.3" stroke="#CC2228" stroke-width="1.8" stroke-linecap="round"/>
-              <circle cx="20.5" cy="10.5" r="2.8" stroke="#CC2228" stroke-width="1.8"/>
-              <path d="M17.2 24.5c.7-3.2 2.6-4.8 4.8-4.8 2.4 0 4.4 1.8 5 4.8" stroke="#CC2228" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div class="info-card__body">
-            <div class="info-card__head">
-              <h3 class="info-card__title" data-i18n="guide.extraDriver.title">Additional Driver</h3>
-              <p class="info-card__example" data-i18n="guide.extraDriver.example">Allowed · no extra charge</p>
-            </div>
-            <ul class="info-card__list">
-              <li data-i18n="guide.extraDriver.l1">Additional driver allowed</li>
-              <li data-i18n="guide.extraDriver.l2">No additional charge</li>
-              <li data-i18n="guide.extraDriver.l3">Driver must meet the applicable driving requirements</li>
-            </ul>
-          </div>
-        </article>
-
-        <!-- 4 · Insurance -->
-        <article class="info-card prem-carousel__card" role="listitem">
-          <div class="info-card__icon-wrap" aria-hidden="true">
-            <svg width="40" height="40" viewBox="0 0 30 30" fill="none">
-              <path d="M15 3L5 7.5v7.5c0 6 4.2 11.6 10 13 5.8-1.4 10-7 10-13V7.5L15 3z" stroke="#CC2228" stroke-width="1.8" stroke-linejoin="round"/>
-              <path d="M10.5 15.5l3.5 3.5 6-7" stroke="#CC2228" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="info-card__body">
-            <div class="info-card__head">
-              <h3 class="info-card__title" data-i18n="guide.insurance.title">Insurance</h3>
-              <p class="info-card__example" data-i18n="guide.insurance.example">Comprehensive · excess up to €300</p>
-            </div>
-            <ul class="info-card__list">
-              <li data-i18n="guide.insurance.l1">Comprehensive insurance</li>
-              <li data-i18n="guide.insurance.l2">Excess up to €300</li>
-              <li data-i18n="guide.insurance.l3">For a single-vehicle accident caused by the driver, with no other vehicle involved, liability may be up to €300 depending on the damage</li>
-              <li data-i18n="guide.insurance.l4">Coverage applies when traffic rules are followed</li>
-            </ul>
-          </div>
-        </article>
-
-        <!-- 5 · What Is Not Covered -->
-        <article class="info-card prem-carousel__card" role="listitem">
-          <div class="info-card__icon-wrap" aria-hidden="true">
-            <svg width="40" height="40" viewBox="0 0 30 30" fill="none">
-              <path d="M15 3L5 7.5v7.5c0 6 4.2 11.6 10 13 5.8-1.4 10-7 10-13V7.5L15 3z" stroke="#CC2228" stroke-width="1.8" stroke-linejoin="round"/>
-              <path d="M11 11.5l8 8M19 11.5l-8 8" stroke="#CC2228" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div class="info-card__body">
-            <div class="info-card__head">
-              <h3 class="info-card__title" data-i18n="guide.notCovered.title">What Is Not Covered</h3>
-              <p class="info-card__example" data-i18n="guide.notCovered.example">When cover does not apply</p>
-            </div>
-            <ul class="info-card__list">
-              <li data-i18n="guide.notCovered.l1">Alcohol or drugs</li>
-              <li data-i18n="guide.notCovered.l2">Racing</li>
-              <li data-i18n="guide.notCovered.l3">Off-road / unpaved roads</li>
-              <li data-i18n="guide.notCovered.l4">Illegal use</li>
-              <li data-i18n="guide.notCovered.l5">Serious traffic violations</li>
-              <li data-i18n="guide.notCovered.l6">Unauthorized driver</li>
-              <li data-i18n="guide.notCovered.l7">Ferry transport without permission</li>
-              <li data-i18n="guide.notCovered.l8">Interior damage not caused by collision</li>
-              <li data-i18n="guide.notCovered.l9">Lost/damaged key</li>
-              <li data-i18n="guide.notCovered.l10">Vehicle kept beyond the agreed rental period</li>
-            </ul>
-          </div>
-        </article>
-
-        <!-- 6 · Vehicle Use -->
-        <article class="info-card prem-carousel__card" role="listitem">
-          <div class="info-card__icon-wrap" aria-hidden="true">
-            <svg width="40" height="40" viewBox="0 0 30 30" fill="none">
-              <path d="M6 18.5l2.2-6.2A2 2 0 0110.1 11h9.8a2 2 0 011.9 1.3L24 18.5" stroke="#CC2228" stroke-width="1.8" stroke-linejoin="round"/>
-              <path d="M4.5 18.5h21" stroke="#CC2228" stroke-width="1.8" stroke-linecap="round"/>
-              <circle cx="9.5" cy="21.5" r="2" stroke="#CC2228" stroke-width="1.8"/>
-              <circle cx="20.5" cy="21.5" r="2" stroke="#CC2228" stroke-width="1.8"/>
-            </svg>
-          </div>
-          <div class="info-card__body">
-            <div class="info-card__head">
-              <h3 class="info-card__title" data-i18n="guide.use.title">Vehicle Use</h3>
-              <p class="info-card__example" data-i18n="guide.use.example">Roads, smoking and return</p>
-            </div>
-            <ul class="info-card__list">
-              <li data-i18n="guide.use.l1">No smoking</li>
-              <li data-i18n="guide.use.l2">No dirt or unpaved roads</li>
-              <li data-i18n="guide.use.l3">No ferry transport to another island without permission</li>
-              <li data-i18n="guide.use.l4">Follow all traffic rules and posted signs</li>
-              <li data-i18n="guide.use.l5">Traffic fines are the renter’s responsibility</li>
-              <li data-i18n="guide.use.l6">Return the vehicle with the interior clean</li>
-            </ul>
-          </div>
-        </article>
-
-        <!-- 7 · Cancellation -->
-        <article class="info-card prem-carousel__card" role="listitem">
-          <div class="info-card__icon-wrap" aria-hidden="true">
-            <svg width="40" height="40" viewBox="0 0 30 30" fill="none">
-              <rect x="5" y="6.5" width="20" height="18.5" rx="2.2" stroke="#CC2228" stroke-width="1.8"/>
-              <path d="M5 12h20" stroke="#CC2228" stroke-width="1.8"/>
-              <path d="M10 4.5v4M20 4.5v4" stroke="#CC2228" stroke-width="1.8" stroke-linecap="round"/>
-              <path d="M11.5 18.2l2.4 2.4 5.2-5.4" stroke="#CC2228" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="info-card__body">
-            <div class="info-card__head">
-              <h3 class="info-card__title" data-i18n="guide.cancel.title">Cancellation</h3>
-              <p class="info-card__example" data-i18n="guide.cancel.example">Free until 1 day before</p>
-            </div>
-            <ul class="info-card__list">
-              <li data-i18n="guide.cancel.l1">Free cancellation up to one day before rental start</li>
-              <li data-i18n="guide.cancel.l2">Later cancellations are subject to the applicable rental charge</li>
-            </ul>
-          </div>
-        </article>
-
-      </div><!-- end .info-grid -->
-
-      <!-- Pagination dots — shown on mobile only -->
-      <div class="prem-carousel__dots" role="tablist" aria-label="Rental information cards" data-i18n-aria="guide.carouselAria">
-        <button type="button" class="prem-carousel__dot prem-carousel__dot--active" role="tab" aria-selected="true"  aria-label="Card 1 of 7" data-i18n-aria="qa.cardN" data-i18n-n="1" data-i18n-total="7"></button>
-        <button type="button" class="prem-carousel__dot"                            role="tab" aria-selected="false" aria-label="Card 2 of 7" data-i18n-aria="qa.cardN" data-i18n-n="2" data-i18n-total="7"></button>
-        <button type="button" class="prem-carousel__dot"                            role="tab" aria-selected="false" aria-label="Card 3 of 7" data-i18n-aria="qa.cardN" data-i18n-n="3" data-i18n-total="7"></button>
-        <button type="button" class="prem-carousel__dot"                            role="tab" aria-selected="false" aria-label="Card 4 of 7" data-i18n-aria="qa.cardN" data-i18n-n="4" data-i18n-total="7"></button>
-        <button type="button" class="prem-carousel__dot"                            role="tab" aria-selected="false" aria-label="Card 5 of 7" data-i18n-aria="qa.cardN" data-i18n-n="5" data-i18n-total="7"></button>
-        <button type="button" class="prem-carousel__dot"                            role="tab" aria-selected="false" aria-label="Card 6 of 7" data-i18n-aria="qa.cardN" data-i18n-n="6" data-i18n-total="7"></button>
-        <button type="button" class="prem-carousel__dot"                            role="tab" aria-selected="false" aria-label="Card 7 of 7" data-i18n-aria="qa.cardN" data-i18n-n="7" data-i18n-total="7"></button>
       </div>
 
     </div>
@@ -1103,7 +1105,7 @@
 
       <!-- Header: title + vehicle identity -->
       <div class="avail-modal__head">
-        <h2 class="avail-modal__title" id="availModalTitle" data-i18n="avail.title">Check Availability</h2>
+        <h2 class="avail-modal__title" id="availModalTitle" data-i18n="avail.title">Check Price & Availability</h2>
         <div class="avail-modal__vehicle-row">
           <span class="avail-modal__group-badge" id="availGroupBadge">Group A</span>
           <span class="avail-modal__vehicle-name" id="availVehicleName">Volkswagen Up! or Similar</span>
@@ -1163,6 +1165,15 @@
         <div class="avail-modal__duration-row" id="availDurationRow" hidden>
           <span class="avail-modal__duration-label" data-i18n="avail.duration">Rental Duration</span>
           <span class="avail-modal__duration-value" id="availDurationValue">—</span>
+        </div>
+
+        <div class="avail-modal__price-block" id="availPriceBlock" hidden>
+          <div class="avail-modal__duration-row" id="availPriceRow">
+            <span class="avail-modal__duration-label" data-i18n="avail.totalPrice">Total Price</span>
+            <span class="avail-modal__duration-value" id="availPriceValue">—</span>
+          </div>
+          <p class="avail-modal__price-note" id="availInsuranceNote" data-i18n="avail.insuranceIncluded">Insurance is included in the rental price.</p>
+          <p class="avail-modal__price-note" id="availContactPriceNote" hidden data-i18n="avail.contactForPrice">For rentals of 8 days or more, please contact us for a price.</p>
         </div>
 
         <!-- Future fields: Pick-up Location · Return Location · Driver Age · Flight Number -->

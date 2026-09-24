@@ -370,7 +370,7 @@
       </button>
 
       <div class="avail-modal__head">
-        <h2 class="avail-modal__title" id="availModalTitle" data-i18n="avail.title">Check Availability</h2>
+        <h2 class="avail-modal__title" id="availModalTitle" data-i18n="avail.title">Check Price & Availability</h2>
         <div class="avail-modal__vehicle-row">
           <span class="avail-modal__group-badge" id="availGroupBadge">Group A</span>
           <span class="avail-modal__vehicle-name" id="availVehicleName">Volkswagen Up! or Similar</span>
@@ -430,6 +430,15 @@
           <span class="avail-modal__duration-value" id="availDurationValue">—</span>
         </div>
 
+        <div class="avail-modal__price-block" id="availPriceBlock" hidden>
+          <div class="avail-modal__duration-row" id="availPriceRow">
+            <span class="avail-modal__duration-label" data-i18n="avail.totalPrice">Total Price</span>
+            <span class="avail-modal__duration-value" id="availPriceValue">—</span>
+          </div>
+          <p class="avail-modal__price-note" id="availInsuranceNote" data-i18n="avail.insuranceIncluded">Insurance is included in the rental price.</p>
+          <p class="avail-modal__price-note" id="availContactPriceNote" hidden data-i18n="avail.contactForPrice">For rentals of 8 days or more, please contact us for a price.</p>
+        </div>
+
         <div class="avail-modal__info-box">
           <p class="avail-modal__info-title">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="display:inline-block;vertical-align:-2px;margin-right:5px">
@@ -482,7 +491,7 @@
         <ul class="fleetpg-modal__specs" id="detailsModalSpecs"></ul>
         <p class="fleetpg-modal__price" id="detailsModalPrice" hidden></p>
         <button type="button" class="fleet-card__cta" id="detailsModalCta" data-group="" data-vehicle="">
-          💬 <span data-i18n="buttons.checkAvailability">Check Availability</span>
+          💬 <span data-i18n="buttons.checkAvailability">Check Price & Availability</span>
         </button>
       </div>
     </div>

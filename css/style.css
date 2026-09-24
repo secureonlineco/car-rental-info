@@ -2244,6 +2244,19 @@ select.avail-modal__input {
   color: var(--red);
 }
 
+/* Total price — sits under rental duration */
+.avail-modal__price-block[hidden] { display: none; }
+.avail-modal__price-block .avail-modal__duration-row {
+  margin-bottom: 8px;
+}
+.avail-modal__price-note {
+  font-size: 11px;
+  color: var(--text-2);
+  margin: 0 0 14px;
+  line-height: 1.45;
+}
+.avail-modal__price-note[hidden] { display: none; }
+
 /* Rental info box */
 .avail-modal__info-box {
   background: rgba(204,34,40,0.04);
