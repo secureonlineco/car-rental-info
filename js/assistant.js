@@ -321,7 +321,8 @@
     cancellation: ['assistant.cancellationNatural'],
     notCovered: ['guide.notCovered.l1', 'guide.notCovered.l2', 'guide.notCovered.l3', 'guide.notCovered.l4', 'guide.notCovered.l5', 'guide.notCovered.l6', 'guide.notCovered.l7', 'guide.notCovered.l8', 'guide.notCovered.l9', 'guide.notCovered.l10'],
     payment: ['assistant.paymentNatural'],
-    rentalHours: ['assistant.rentalHoursNatural']
+    rentalHours: ['assistant.rentalHoursNatural'],
+    childSeats: ['assistant.childSeatsNatural']
   };
 
   function phraseMatches(text, phrase) {

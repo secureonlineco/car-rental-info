@@ -122,12 +122,13 @@
   };
 
   var SUGGEST_KEYS = [
-    'assistant.suggest.deposit',
-    'assistant.suggest.age',
-    'assistant.suggest.priceC3',
-    'assistant.suggest.extraDriver',
-    'assistant.suggest.ferry',
-    'assistant.suggest.insurance'
+    'assistant.suggest.price',
+    'assistant.suggest.fleet',
+    'assistant.suggest.insurance',
+    'assistant.suggest.pickupReturn',
+    'assistant.suggest.emergency',
+    'assistant.suggest.childSeats',
+    'assistant.suggest.fuelPolicy'
   ];
 
   global.IRAC = global.IRAC || {};
