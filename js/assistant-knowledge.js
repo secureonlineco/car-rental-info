@@ -29,10 +29,6 @@
     'glass', 'windscreen', 'windshield', 'windschutz', 'pare-brise', 'parabrezza', 'voorruit',
     'szyba', 'стекл', 'čelní', 'vindruta', 'forrude', 'frontrute', 'tuulilasi',
     'roadside', 'pannenhilfe', 'dépannage', 'soccorso', 'pechhulp', 'pomoc drogowa',
-    'replacement vehicle', 'ersatzwagen', 'véhicule de remplacement', 'auto sostitutiva',
-    'vervangende auto', 'samochód zastępczy',
-    'late return', 'late-return', 'verspätete rückgabe', 'retour tardif', 'restituzione in ritardo',
-    'early return', 'early-return', 'vorzeitige rückgabe', 'retour anticipé',
     'late cancel', 'late cancellation', 'stornogebühr'
   ];
 
@@ -40,10 +36,15 @@
     'fuel included', 'is fuel included', 'fuel policy', 'who pays for fuel', 'pay for fuel',
     'pays for fuel', 'full-to-full', 'full to full', 'full to-full',
     'return the car full', 'return it full', 'return full', 'tank full', 'full tank',
+    'how much fuel', 'same fuel', 'same fuel level', 'less fuel', 'fuel return',
+    'refill the car', 'fuel level'
+  ];
+
+  var CHARGING_POLICY = [
     'charging included', 'is charging included', 'charging policy',
     'how does charging', 'how charging works', 'need to charge', 'charge the ev',
     'charge before', 'charge the car', 'before returning', 'do i need to charge',
-    'how much fuel', 'same fuel'
+    'charging procedure', 'charging cost', 'charge the id'
   ];
 
   var FUEL_TYPE = [
@@ -131,18 +132,32 @@
     'assistant.suggest.fuelPolicy'
   ];
 
+  /* Approved hotel offices from the public availability list — not arbitrary places. */
+  var HOTEL_OFFICES = [
+    'Atlantica Beach Resort Kos',
+    'Atlantica Belvedere Resort',
+    'Atlantica Beach Resort Suites',
+    'Porto Bello Beach Hotel',
+    'Porto Bello Royal Hotel',
+    'Lagas Aegean Village',
+    'Atlantica Mikri Poli Kos',
+    'Grand Blue Beach Hotel'
+  ];
+
   global.IRAC = global.IRAC || {};
   global.IRAC.ASSISTANT_KNOWLEDGE = {
     WA_URL: WA_URL,
     DAY_WORDS: DAY_WORDS,
     DENY: DENY,
     FUEL_POLICY: FUEL_POLICY,
+    CHARGING_POLICY: CHARGING_POLICY,
     FUEL_TYPE: FUEL_TYPE,
     PRICE_FOLLOW_UP: PRICE_FOLLOW_UP,
     PRICE_WORDS: PRICE_WORDS,
     VEHICLE_WORDS: VEHICLE_WORDS,
     CONTACT_WORDS: CONTACT_WORDS,
     POLICY: POLICY,
-    SUGGEST_KEYS: SUGGEST_KEYS
+    SUGGEST_KEYS: SUGGEST_KEYS,
+    HOTEL_OFFICES: HOTEL_OFFICES
   };
 }(window));

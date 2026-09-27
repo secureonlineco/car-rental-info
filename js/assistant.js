@@ -322,7 +322,37 @@
     notCovered: ['guide.notCovered.l1', 'guide.notCovered.l2', 'guide.notCovered.l3', 'guide.notCovered.l4', 'guide.notCovered.l5', 'guide.notCovered.l6', 'guide.notCovered.l7', 'guide.notCovered.l8', 'guide.notCovered.l9', 'guide.notCovered.l10'],
     payment: ['assistant.paymentNatural'],
     rentalHours: ['assistant.rentalHoursNatural'],
-    childSeats: ['assistant.childSeatsNatural']
+    childSeats: ['assistant.childSeatsNatural'],
+    fuelPolicy: ['assistant.fuelPolicyNatural'],
+    hotelPickup: ['assistant.hotelPickupNatural'],
+    airport: ['assistant.airportNatural'],
+    accident: ['assistant.accidentNatural'],
+    breakdown: ['assistant.breakdownNatural'],
+    lateReturn: ['assistant.lateReturnNatural'],
+    latePickup: ['assistant.latePickupNatural'],
+    earlyReturn: ['assistant.earlyReturnNatural'],
+    extendRental: ['assistant.extendRentalNatural'],
+    changeDates: ['assistant.changeDatesNatural'],
+    changePickupTime: ['assistant.changePickupTimeNatural'],
+    changeLocation: ['assistant.changeLocationNatural'],
+    changeVehicle: ['assistant.changeVehicleNatural'],
+    lostProperty: ['assistant.lostPropertyNatural'],
+    cleanliness: ['assistant.cleanlinessNatural']
+  };
+
+  var WA_HANDLERS = {
+    airport: 1,
+    accident: 1,
+    breakdown: 1,
+    lateReturn: 1,
+    latePickup: 1,
+    earlyReturn: 1,
+    extendRental: 1,
+    changeDates: 1,
+    changePickupTime: 1,
+    changeLocation: 1,
+    changeVehicle: 1,
+    lostProperty: 1
   };
 
   function phraseMatches(text, phrase) {
@@ -360,10 +390,78 @@
     return 0;
   }
 
+  var HOTEL_ACTION = [
+    'return', 'pick up', 'pickup', 'collect', 'drop off', 'drop-off',
+    'deliver', 'delivery', 'abholen', 'abholung', 'zurückgeben', 'ruckgabe', 'rückgabe',
+    'rendre', 'prendre', 'ritirare', 'restituire', 'ophalen', 'terugbrengen',
+    'odebrać', 'oddac', 'oddać', 'вернуть', 'получить', 'vyzvednout', 'vratit', 'vrátit',
+    'hamta', 'hämta', 'lamna', 'lämna', 'hente', 'aflevere', 'levere', 'noutaa', 'palauttaa'
+  ];
+
+  function hotelOfficeAliases() {
+    var hotels = knowledge().HOTEL_OFFICES || [];
+    var aliases = [];
+    var seen = {};
+    function add(s) {
+      s = normalize(s);
+      if (!s) return;
+      var parts = s.split(' ');
+      if (parts.length < 2) return;
+      if (parts[0].length < 4 || parts[1].length < 4) return;
+      if (seen[s]) return;
+      seen[s] = 1;
+      aliases.push(s);
+    }
+    var trail = /^(hotel|resort|kos|suites)$/;
+    var i, j, words, trimmed;
+    for (i = 0; i < hotels.length; i++) {
+      words = normalize(hotels[i]).split(' ').filter(Boolean);
+      add(words.join(' '));
+      trimmed = words.slice();
+      while (trimmed.length > 1 && trail.test(trimmed[trimmed.length - 1])) {
+        trimmed.pop();
+        add(trimmed.join(' '));
+      }
+      for (j = 2; j < words.length; j++) {
+        add(words.slice(0, j).join(' '));
+      }
+    }
+    return aliases;
+  }
+
+  function matchNamedHotelOffice(text) {
+    var aliases = hotelOfficeAliases();
+    var i, alias, best = '';
+    for (i = 0; i < aliases.length; i++) {
+      alias = aliases[i];
+      if (!phraseMatches(text, alias)) continue;
+      if (alias.split(' ').length < 3 && !containsAny(text, HOTEL_ACTION)) continue;
+      if (alias.length > best.length) best = alias;
+    }
+    return best;
+  }
+
+  var AIRPORT_PLACES = [
+    'airport', 'flughafen', 'aéroport', 'aeroport', 'aeroporto', 'luchthaven',
+    'lotnisko', 'аэропорт', 'letiště', 'letiste', 'flygplats', 'lufthavn',
+    'flyplass', 'lentoasema'
+  ];
+
+  var AIRPORT_ACTION = HOTEL_ACTION.concat([
+    'get the car', 'get my car'
+  ]);
+
+  function matchAirportAction(text) {
+    if (!containsAny(text, AIRPORT_PLACES)) return '';
+    if (!containsAny(text, AIRPORT_ACTION)) return '';
+    return 'airport-action';
+  }
+
   function matchLibraryIntent(text) {
     var map = (window.IRAC && IRAC.ASSISTANT_INTENTS) || {};
     var best = null;
     var name, it, i, phrase, words, cand;
+    var hotelIt, hotelAlias, airportIt, airportHit;
     words = text.split(' ');
     for (name in map) {
       if (!Object.prototype.hasOwnProperty.call(map, name)) continue;
@@ -384,6 +482,32 @@
         };
         if (!best || compareLibraryHits(cand, best) > 0) best = cand;
       }
+    }
+    hotelIt = map.hotel_pickup_return;
+    hotelAlias = hotelIt && !hitExclusion(text, hotelIt.exclusions) ? matchNamedHotelOffice(text) : '';
+    if (hotelAlias) {
+      cand = {
+        name: 'hotel_pickup_return',
+        handler: hotelIt.handler,
+        phrase: hotelAlias,
+        priority: hotelIt.priority || 90,
+        exact: text === hotelAlias ? 1 : 0,
+        wordCount: hotelAlias.split(' ').length
+      };
+      if (!best || compareLibraryHits(cand, best) > 0) best = cand;
+    }
+    airportIt = map.airport;
+    airportHit = airportIt && !hitExclusion(text, airportIt.exclusions) ? matchAirportAction(text) : '';
+    if (airportHit) {
+      cand = {
+        name: 'airport',
+        handler: airportIt.handler,
+        phrase: airportHit,
+        priority: airportIt.priority || 90,
+        exact: 0,
+        wordCount: 2
+      };
+      if (!best || compareLibraryHits(cand, best) > 0) best = cand;
     }
     return best;
   }
@@ -427,6 +551,7 @@
   function contactReply() {
     return {
       text: [
+        t('assistant.contactRoutingNatural'),
         t('contact.address').replace(/<br\s*\/?>/gi, ', '),
         t('contact.days') + ' · ' + t('contact.hours1') + ' · ' + t('contact.hours2'),
         '+30 22420 92265',
@@ -552,9 +677,14 @@
     }
 
     /* 2. Specific semantic intents beat generic keyword flags */
-    if (isFuelPolicy && !structuredPrice) {
+    if (containsAny(text, K.CHARGING_POLICY || []) && !structuredPrice) {
       lastGroup = '';
       return { text: t('assistant.unconfirmedNatural'), whatsapp: true };
+    }
+
+    if (isFuelPolicy && !structuredPrice) {
+      lastGroup = '';
+      return { text: t('assistant.fuelPolicyNatural') };
     }
 
     if (libHandler === 'unconfirmed') {
@@ -587,7 +717,9 @@
 
     if (libHandler && HANDLER_KEYS[libHandler]) {
       lastGroup = '';
-      return { text: policyLines(HANDLER_KEYS[libHandler]) };
+      var handled = { text: policyLines(HANDLER_KEYS[libHandler]) };
+      if (WA_HANDLERS[libHandler]) handled.whatsapp = true;
+      return handled;
     }
 
     /* 3. Policy keyword fallback only when the library did not already decide */
@@ -604,8 +736,13 @@
 
     if (libHandler === 'specificModel') {
       lastGroup = '';
-      if (named || group) return groupReply(group || named.group);
-      return { text: t('assistant.fleetOverviewNatural'), fleet: true };
+      if (named) {
+        return {
+          text: t('assistant.specificModelNamedNatural', { name: named.name, group: named.group }),
+          whatsapp: true
+        };
+      }
+      return { text: t('assistant.specificModelNatural'), whatsapp: true };
     }
 
     if (libHandler === 'fleet' && !group && !named && !structuredPrice) {
